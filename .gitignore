@@ -1,0 +1,14 @@
+# test data
+/database/
+/exports/
+/derby.log
+/config.ini
+
+# binary builds
+/target/
+/olca-conversion-service/server.jar
+
+# IDE settings
+/.settings/
+/.project
+/.classpath
