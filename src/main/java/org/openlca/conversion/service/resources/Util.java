@@ -7,7 +7,6 @@ import javax.ws.rs.core.Response.Status;
 class Util {
 
 	private Util() {
-
 	}
 
 	static Response unexpectedException(Exception e) {

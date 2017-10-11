@@ -1,15 +1,11 @@
-# test data
-/database/
-/exports/
-/derby.log
-/config.ini
+derby.log
+config.ini
 
-# binary builds
-/target/
-/olca-conversion-service/server.jar
+target/
 
-# IDE settings
-/.settings/
-/.project
-/.classpath
-/olca-conversion-service.zip
+
+.settings/
+.project
+.classpath
+.idea/
+*.iml

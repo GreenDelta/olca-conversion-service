@@ -26,9 +26,9 @@ public class Server {
 	private static Logger log = LoggerFactory.getLogger(Server.class);
 
 	public static void main(String[] args) {
-		Config config = getConfig();
 		try {
-			IDatabase db = new DerbyDatabase(config.getDatabaseFolder());
+			Config config = getConfig(args);
+			IDatabase db = config.initDB();
 			HttpServer server = createServer(config, db);
 			addShutdownHook(db, server);
 			log.info("starting server");
@@ -40,16 +40,22 @@ public class Server {
 		}
 	}
 
-	private static void addShutdownHook(final IDatabase db,
-			final HttpServer server) {
-		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-			public void run() {
-				try {
-					db.close();
-					server.stop();
-				} catch (Exception e) {
-					log.error("failed to shutdown service", e);
-				}
+	private static Config getConfig(String[] args) {
+		File file = new File("config.json");
+		if (file.exists())
+			return Config.fromFile(file);
+		if (args != null && args.length > 0)
+			return Config.fromFile(new File(args[0]));
+		return Config.getDefault();
+	}
+
+	private static void addShutdownHook(IDatabase db, HttpServer server) {
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			try {
+				db.close();
+				server.stop();
+			} catch (Exception e) {
+				log.error("failed to shutdown service", e);
 			}
 		}, "shutdownHook"));
 	}
@@ -58,51 +64,13 @@ public class Server {
 			throws Exception {
 		ResourceConfig resourceConfig = new PackagesResourceConfig(
 				"org.openlca.conversion.service.resources");
-		Injector injector = Guice.createInjector(new Module() {
-			public void configure(Binder binder) {
-				binder.bind(IDatabase.class).toInstance(db);
-				binder.bind(Config.class).toInstance(Config.getDefault());
-			}
+		Injector injector = Guice.createInjector((binder) -> {
+			binder.bind(IDatabase.class).toInstance(db);
+			binder.bind(Config.class).toInstance(config);
 		});
 		IoCComponentProviderFactory ioc = new GuiceComponentProviderFactory(
 				resourceConfig, injector);
-		final HttpServer server = GrizzlyServerFactory.createHttpServer(
-				"http://localhost:" + config.getPort(), resourceConfig, ioc);
-		return server;
+		return GrizzlyServerFactory.createHttpServer(
+				"http://localhost:" + config.port, resourceConfig, ioc);
 	}
-
-	private static Config getConfig() {
-		File file = new File("config.ini");
-		if (!file.exists()) {
-			log.warn("config.ini not found; taking default configuration");
-			return Config.getDefault();
-		}
-		try (InputStream is = new FileInputStream(file)) {
-			Properties props = new Properties();
-			props.load(is);
-			return getConfig(props);
-		} catch (Exception e) {
-			log.error("failed to load config.ini", e);
-			log.warn("taking default configuration");
-			return Config.getDefault();
-		}
-	}
-
-	private static Config getConfig(Properties props) {
-		Config config = Config.getDefault();
-		String port = props.getProperty("port");
-		if (port != null)
-			config.setPort(port);
-		String exportPath = props.getProperty("exportFolder");
-		if (exportPath != null)
-			config.setExportFolder(new File(exportPath));
-		String databasePath = props.getProperty("databaseFolder");
-		if (databasePath != null)
-			config.setDatabaseFolder(new File(databasePath));
-		String prettyFormat = props.getProperty("prettyFormat");
-		if (prettyFormat != null)
-			config.setPrettyPrinting(Boolean.parseBoolean(prettyFormat));
-		return config;
-	}
-
 }
