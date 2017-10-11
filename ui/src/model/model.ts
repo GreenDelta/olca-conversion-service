@@ -5,3 +5,10 @@ export enum Format {
 }
 
 export const FORMATS = [Format.ECOSPOLD_1, Format.ILCD, Format.JSON_LD];
+
+export interface ConversionInfo {
+    url: string;
+    sourceFormat: Format;
+    targetFormat: Format;
+    error?: string;
+}
