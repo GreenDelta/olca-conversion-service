@@ -80,12 +80,11 @@
 
 	<build>
 
-        <!--
-        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+        <!--
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         -->
+
         <plugins>
             <plugin>
                 <artifactId>kotlin-maven-plugin</artifactId>
@@ -98,13 +97,6 @@
                         <goals>
                             <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <sourceDirs>
-                                <source>src/main/java</source>
-                                <source>src/main/kotlin</source>
-                                <source>src/main/resources</source>
-                            </sourceDirs>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>test-compile</id>
@@ -112,13 +104,6 @@
                         <goals>
                             <goal>test-compile</goal>
                         </goals>
-                        <configuration>
-                            <sourceDirs>
-                                <source>src/test/java</source>
-                                <source>src/test/kotlin</source>
-                                <source>src/test/resources</source>
-                            </sourceDirs>
-                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
@@ -142,7 +127,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>org.openlca.conversion.service.Server</mainClass>
+							<mainClass>app.Server</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
