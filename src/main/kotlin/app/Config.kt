@@ -11,8 +11,8 @@ import org.openlca.core.database.derby.DerbyDatabase
 
 class Config {
 
-    var port: Int = 0
-    var workspace: String
+    var port: Int = 8080
+    var workspace = "workspace"
     var ui: String? = null
     var derbyDB: DerbyConfig? = null
 
@@ -40,12 +40,13 @@ class Config {
 
         fun fromFile(file: File): Config {
             val gson = Gson()
-            try {
-                FileInputStream(file).use { `is` -> InputStreamReader(`is`, "utf-8").use { reader -> BufferedReader(reader).use { buffer -> return gson.fromJson(buffer, Config::class.java) } } }
-            } catch (e: Exception) {
-                throw RuntimeException(e)
+            FileInputStream(file).use { stream ->
+                InputStreamReader(stream, "utf-8").use { reader ->
+                    BufferedReader(reader).use { buffer ->
+                        return gson.fromJson(buffer, Config::class.java)
+                    }
+                }
             }
-
         }
     }
 }

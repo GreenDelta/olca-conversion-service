@@ -3,7 +3,7 @@ package org.openlca.conversion.service;
 import java.io.File;
 import java.net.URI;
 
-import org.glassfish.grizzly.http.server.CLStaticHttpHandler;
+import app.Config;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -36,10 +36,10 @@ public class Server {
 	private static Config getConfig(String[] args) {
 		File file = new File("config.json");
 		if (file.exists())
-			return Config.fromFile(file);
+			return Config.Companion.fromFile(file);
 		if (args != null && args.length > 0)
-			return Config.fromFile(new File(args[0]));
-		return Config.getDefault();
+			return Config.Companion.fromFile(new File(args[0]));
+		return Config.Companion.getDefault();
 	}
 
 	private static void addShutdownHook(IDatabase db, HttpServer server) {
@@ -58,11 +58,11 @@ public class Server {
 		ResourceConfig resourceConfig = new ResourceConfig().packages(
 				"org.openlca.conversion.service.resources");
 		HttpServer server =  GrizzlyHttpServerFactory.createHttpServer(URI.create(
-				"http://localhost:" + config.port + "/api"), resourceConfig);
-		if (config.ui != null) {
-			File uiDir = new File(config.ui);
+				"http://localhost:" + config.getPort() + "/api"), resourceConfig);
+		if (config.getUi() != null) {
+			File uiDir = new File(config.getUi());
 			if (uiDir.isDirectory()) {
-				StaticHttpHandler ui = new StaticHttpHandler(config.ui, "/");
+				StaticHttpHandler ui = new StaticHttpHandler(config.getUi(), "/");
 				server.getServerConfiguration().addHttpHandler(ui);
 			}
 		}
