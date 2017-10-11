@@ -1,0 +1,31 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+      "align": [
+        true,
+        "statements"
+      ],
+      "no-reference": false,
+      "no-console": [
+        false
+      ],
+      "no-bitwise": false,
+      "no-string-literal": false,
+      "no-unused-variable": true,
+      "no-unused-expression": [
+        false
+      ],
+      "max-line-length": [
+        false
+      ],
+      "max-classes-per-file": [
+        false
+      ],
+      "interface-name": [
+        false
+      ],
+      "ordered-imports": false,
+      "member-ordering": false,
+      "object-literal-sort-keys": false
+    }
+  }

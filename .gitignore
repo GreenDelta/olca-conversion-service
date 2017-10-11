@@ -1,7 +1,8 @@
 derby.log
 config.ini
 
-src/ui/build/
+ui/build/
+ui/node_modules/
 target/
 
 .settings/
