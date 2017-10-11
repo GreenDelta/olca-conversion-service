@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.openlca.core.database.IDatabase;
 import org.openlca.core.database.derby.DerbyDatabase;
 
@@ -44,11 +43,5 @@ public class Config {
 		if (derbyDB != null && derbyDB.folder != null)
 			return new DerbyDatabase(new File(derbyDB.folder));
 		throw new RuntimeException("no database configuration found");
-	}
-
-	public Gson getGson() {
-		GsonBuilder builder = new GsonBuilder();
-		builder.setExclusionStrategies(new JsonExclusion());
-		return builder.create();
 	}
 }
