@@ -3,7 +3,9 @@ package org.openlca.conversion.service;
 import java.io.File;
 import java.net.URI;
 
+import org.glassfish.grizzly.http.server.CLStaticHttpHandler;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.openlca.core.database.IDatabase;
@@ -55,7 +57,15 @@ public class Server {
 			throws Exception {
 		ResourceConfig resourceConfig = new ResourceConfig().packages(
 				"org.openlca.conversion.service.resources");
-		return GrizzlyHttpServerFactory.createHttpServer(URI.create(
-				"http://localhost:" + config.port), resourceConfig);
+		HttpServer server =  GrizzlyHttpServerFactory.createHttpServer(URI.create(
+				"http://localhost:" + config.port + "/api"), resourceConfig);
+		if (config.ui != null) {
+			File uiDir = new File(config.ui);
+			if (uiDir.isDirectory()) {
+				StaticHttpHandler ui = new StaticHttpHandler(config.ui, "/");
+				server.getServerConfiguration().addHttpHandler(ui);
+			}
+		}
+		return server;
 	}
 }

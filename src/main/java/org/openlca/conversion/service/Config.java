@@ -13,6 +13,7 @@ public class Config {
 
 	public int port;
 	public String workspace;
+	public String ui;
 	public DerbyConfig derbyDB;
 
 	public static class DerbyConfig {
