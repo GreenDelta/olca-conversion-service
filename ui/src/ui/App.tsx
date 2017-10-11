@@ -63,6 +63,8 @@ export class App extends React.Component<{}, model.ConversionInfo> {
         req.onload = () => {
             if (req.status !== 200) {
                 this.setState({error: req.responseText});
+            } else {
+                console.log(req);
             }
         };
         req.send(JSON.stringify(this.state));

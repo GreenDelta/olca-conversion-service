@@ -1,5 +1,6 @@
 package app
 
+import app.model.Workspace
 import java.io.File
 import java.net.URI
 
@@ -15,12 +16,14 @@ object Server {
     private val log = LoggerFactory.getLogger(Server::class.java)
 
     var db: IDatabase? = null
+    var workspace: Workspace? = null
 
     @JvmStatic
     fun main(args: Array<String>) {
         try {
             val config = getConfig(args)
             db = config.initDB()
+            workspace = Workspace(config.workspace)
             val server = createServer(config)
             addShutdownHook(server)
             log.info("starting server")
