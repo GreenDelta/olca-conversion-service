@@ -1,7 +1,29 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>openLCA Data Conversion Service</title>
+    <link rel="stylesheet" href="lib/milligram.min.css">
+</head>
 
 <body>
-    <h1>Works!</h1>
+    <div id="app-root"></div>
+
+    <script src="lib/react.min.js"></script>
+    <script src="lib/react-dom.min.js"></script>
+    <script src="lib/require.js"></script>
+    <script src="lib/app.js"></script>
+
+    <script>
+        (function() {
+            define('react', React);
+            define('react-dom', ReactDOM);
+            require(['app'], function (app) {
+                app.main();
+            });
+        })();
+    </script>
 </body>
 
 </html>

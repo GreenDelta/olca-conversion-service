@@ -25,7 +25,8 @@ gulp.task('copy', ['clean'], () => {
     const libs = gulp.src([
         'node_modules/requirejs/require.js',
         'node_modules/react/dist/react.min.js',
-        'node_modules/react-dom/dist/react-dom.min.js'
+        'node_modules/react-dom/dist/react-dom.min.js',
+        'node_modules/milligram/dist/milligram.min.css',
     ]).pipe(gulp.dest('build/lib'));
 });
 
