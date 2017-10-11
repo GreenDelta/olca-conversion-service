@@ -13,7 +13,11 @@ class Workspace(path: String) {
     }
 
     fun file(processID: String, format: Format): File {
-        val name = "${processID}_${format.label}.zip"
+        val name = "${processID}_${format.name}.zip"
+        return File(dir, name)
+    }
+
+    fun file(name: String): File {
         return File(dir, name)
     }
 }

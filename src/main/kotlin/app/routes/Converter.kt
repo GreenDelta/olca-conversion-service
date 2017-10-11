@@ -2,10 +2,10 @@ package app.routes
 
 import app.model.*
 import com.google.gson.Gson
-import java.nio.file.Files
 import javax.ws.rs.Consumes
 import javax.ws.rs.POST
 import javax.ws.rs.Path
+import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
@@ -14,6 +14,7 @@ class Converter {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     fun convert(body: String): Response {
         val info = Gson().fromJson(body, ConversionInfo::class.java)
         val imp = getImport(info)
@@ -31,10 +32,8 @@ class Converter {
         try {
             val processID = imp.doIt(info.url)
             val file = exp.doIt(processID)
-            val bytes = Files.readAllBytes(file.toPath())
-            return Response.ok(bytes).type("application/zip")
-                    .header("Content-Disposition","attachment; " +
-                    "filename=\"${file.name}\"").build()
+            return Response.status(Response.Status.OK)
+                    .entity(file.name).type(MediaType.TEXT_PLAIN).build()
         } catch (e: Exception) {
             val msg = "Conversion failed: ${e.message}"
             return Response.status(Response.Status.NOT_IMPLEMENTED)

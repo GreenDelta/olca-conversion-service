@@ -50,10 +50,19 @@ export class App extends React.Component<{}, model.ConversionInfo> {
                     </div>
                 </div>
                 <div className="row">
-                    <p style={{color: "red"}}>{this.state.error}</p>
+                    <p style={{ color: "red" }}>{this.state.error}</p>
+                    {this.renderLink()}
                 </div>
             </div>
         );
+    }
+
+    private renderLink(): JSX.Element {
+        const file = this.state.download;
+        if (!this.state.download) {
+            return <p />;
+        }
+        return <a href={`/api/result/${file}`}>{file}</a>;
     }
 
     private runConversion() {
@@ -62,9 +71,9 @@ export class App extends React.Component<{}, model.ConversionInfo> {
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.onload = () => {
             if (req.status !== 200) {
-                this.setState({error: req.responseText});
+                this.setState({ error: req.responseText });
             } else {
-                console.log(req);
+                this.setState({ download: req.responseText });
             }
         };
         req.send(JSON.stringify(this.state));
