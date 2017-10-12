@@ -8,6 +8,7 @@ import javax.ws.rs.Path
 import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
+import javax.ws.rs.core.Response.Status
 
 @Path("convert")
 class Converter {
@@ -20,25 +21,32 @@ class Converter {
         val imp = getImport(info)
         if (imp == null) {
             val msg = "unsupported source format: ${info.sourceFormat}"
-            return Response.status(Response.Status.NOT_IMPLEMENTED)
-                    .entity(msg).type(MediaType.TEXT_PLAIN).build()
+            return respond(msg, Status.NOT_IMPLEMENTED)
         }
         val exp = getExport(info)
         if (exp == null) {
             val msg = "unsupported target format: ${info.targetFormat}"
-            return Response.status(Response.Status.NOT_IMPLEMENTED)
-                    .entity(msg).type(MediaType.TEXT_PLAIN).build()
+            return respond(msg, Status.NOT_IMPLEMENTED)
         }
-        try {
-            val processID = imp.doIt(info.url)
-            val file = exp.doIt(processID)
-            return Response.status(Response.Status.OK)
-                    .entity(file.name).type(MediaType.TEXT_PLAIN).build()
+        return doIt(info, imp, exp)
+    }
+
+    private fun doIt(info: ConversionInfo, imp: Import, exp: Export): Response {
+        return try {
+            val p = imp.doIt(info.url)
+            val file = exp.doIt(p)
+            respond(file.name, Status.OK)
         } catch (e: Exception) {
             val msg = "Conversion failed: ${e.message}"
-            return Response.status(Response.Status.NOT_IMPLEMENTED)
-                    .entity(msg).type(MediaType.TEXT_PLAIN).build()
+            respond(msg, Status.INTERNAL_SERVER_ERROR)
         }
+    }
+
+    private fun respond(msg: String, stat: Status): Response {
+        return Response.status(stat)
+                .entity(msg)
+                .type(MediaType.TEXT_PLAIN)
+                .build()
     }
 
     private fun getImport(info: ConversionInfo): Import? {
@@ -53,6 +61,7 @@ class Converter {
         val format = Format.get(info.targetFormat)
         return when(format) {
             Format.JSON_LD -> ExportJSON()
+            Format.ILCD -> ExportILCD()
             else -> null
         }
     }

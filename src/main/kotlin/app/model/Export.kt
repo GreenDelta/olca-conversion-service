@@ -1,8 +1,11 @@
 package app.model
 
+import org.openlca.core.model.Process
 import java.io.File
 
 interface Export {
 
-    fun doIt(id: String): File
+    val format: Format
+
+    fun doIt(p: Process): File
 }

@@ -8,6 +8,15 @@ data sets, it can be configured to use an
 [embedded Derby database](https://db.apache.org/derby/papers/DerbyTut/embedded_intro.html)
 or a MySQL database.
 
+### Implementation status
+
+* [ ] EcoSpold 1 -> JSON LD
+* [ ] EcoSpold 1 -> ILCD
+* [ ] ILCD -> EcoSpold 1
+* [x] ILCD -> JSON LD
+* [ ] JSON LD -> EcoSpold 1
+* [ ] JSON LD -> ILCD
+
 ## Installation
 ...
 
@@ -27,7 +36,7 @@ back the link to another client. The following data provider are currently
 supported:
 
 | Format | Data provider | Example URL |
-|--------|..-------------|------------ |
+|--------| -------------|------------ |
 | EcoSpold 1 | Plain HTTP server providing the data set | [example from the Needs project](http://www.needs-project.org/needswebdb/scripts/download.php?fileid=4&type=xml) |
 | ILCD | [soda4LCA](https://bitbucket.org/okusche/soda4lca) | [example from the ELCD database](http://eplca.jrc.ec.europa.eu/ELCD3/resource/processes/1a7da06d-e8b7-4ff1-920c-209e9009dbe0) |
 | JSON LD | [openLCA CS](http://www.openlca.org/collaboration-server/) | ? |
