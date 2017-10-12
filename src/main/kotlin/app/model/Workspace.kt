@@ -1,6 +1,7 @@
 package app.model
 
 import java.io.File
+import java.util.*
 
 class Workspace(path: String) {
 
@@ -19,5 +20,23 @@ class Workspace(path: String) {
 
     fun file(name: String): File {
         return File(dir, name)
+    }
+
+    fun tempDir(): File {
+        val temp = File(dir, "temp")
+        if (!temp.exists()) {
+            temp.mkdirs()
+        }
+        val d = File(temp, UUID.randomUUID().toString())
+        d.mkdirs()
+        return d
+    }
+
+    fun tempFile(): File {
+        val temp = File(dir, "temp")
+        if (!temp.exists()) {
+            temp.mkdirs()
+        }
+        return File(temp, UUID.randomUUID().toString())
     }
 }

@@ -12,7 +12,7 @@ or a MySQL database.
 
 * [x] EcoSpold 1 -> JSON LD
 * [x] EcoSpold 1 -> ILCD
-* [ ] ILCD -> EcoSpold 1
+* [x] ILCD -> EcoSpold 1
 * [x] ILCD -> JSON LD
 * [ ] JSON LD -> EcoSpold 1
 * [ ] JSON LD -> ILCD
