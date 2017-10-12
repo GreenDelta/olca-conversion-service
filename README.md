@@ -1,10 +1,46 @@
 openLCA conversion service
 ==========================
-This project provides a RESTful web-service for the openLCA data conversion
+This project provides a web-service for converting LCA process data sets. It is
+a Java application using the [Grizzly HTTP Server](https://javaee.github.io/grizzly/)
+and the import and export functions of the
+[openLCA core modules](https://github.com/GreenDelta/olca-modules). For caching
+data sets, it can be configured to use an 
+[embedded Derby database](https://db.apache.org/derby/papers/DerbyTut/embedded_intro.html)
+or a MySQL database.
+
+## Installation
+...
+
+## How it works
+A client sends a conversion request to the conversion server which includes an
+URL to the respective process data set, the format of this data set, and the
+target format to which this data set should be converted. The conversion server
+then fetches all the required data from the data server using a format specific
+protocol. The converted data set with all associated resources (e.g. flow data
+sets etc.) are cached on the conversion server and a link to this data set is
+send back to the client:
+
+![How it works](./conversion-service.png)
+
+Note that the client could be itself the back-end of an HTTP server that sends
+back the link to another client. The following data provider are currently
+supported:
+
+| Format | Data provider | Example URL |
+|--------|..-------------|------------ |
+| EcoSpold 1 | Plain HTTP server providing the data set | [example from the Needs project](http://www.needs-project.org/needswebdb/scripts/download.php?fileid=4&type=xml) |
+| ILCD | [soda4LCA](https://bitbucket.org/okusche/soda4lca) | [example from the ELCD database](http://eplca.jrc.ec.europa.eu/ELCD3/resource/processes/1a7da06d-e8b7-4ff1-920c-209e9009dbe0) |
+| JSON LD | [openLCA CS](http://www.openlca.org/collaboration-server/) | ? |
+
+
+## Building from source
+...
+
+the openLCA data conversion
 functionalities. The service is linked to an openLCA Derby database for storing 
 mappings, reference data, and processes. You can configure the service to use
 an existing database. See the 
-[sample configuration file](./olca-conversion-service/config.ini) for more 
+[sample configuration file](deploy/config.json) for more 
 information regarding the server setup. In the distribution package, just 
 execute the `run` script to start the service.  
 

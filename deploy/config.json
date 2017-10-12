@@ -1,0 +1,8 @@
+{
+  "port": 80,
+  "workspace": "./workspace",
+  "ui": "./web",
+  "derbyDB": {
+    "folder": "./database"
+  }
+}
