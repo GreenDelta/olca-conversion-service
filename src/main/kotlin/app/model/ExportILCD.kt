@@ -11,7 +11,7 @@ class ExportILCD : Export {
     override val format = Format.ILCD
 
     override fun doIt(p: Process): File {
-        val file = Server.workspace!!.file(p.refId, Format.JSON_LD)
+        val file = Server.workspace!!.file(p.refId, format)
         if (file.exists())
             return file
         val conf = ExportConfig(Server.db, file)

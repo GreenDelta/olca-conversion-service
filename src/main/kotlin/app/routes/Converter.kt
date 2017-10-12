@@ -53,6 +53,7 @@ class Converter {
         val format = Format.get(info.sourceFormat)
         return when(format) {
             Format.ILCD -> ImportILCD()
+            Format.ECOSPOLD_1 -> ImportEcoSpold1()
             else -> null
         }
     }

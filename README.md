@@ -10,8 +10,8 @@ or a MySQL database.
 
 ### Implementation status
 
-* [ ] EcoSpold 1 -> JSON LD
-* [ ] EcoSpold 1 -> ILCD
+* [x] EcoSpold 1 -> JSON LD
+* [x] EcoSpold 1 -> ILCD
 * [ ] ILCD -> EcoSpold 1
 * [x] ILCD -> JSON LD
 * [ ] JSON LD -> EcoSpold 1
