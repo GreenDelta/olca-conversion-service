@@ -48,19 +48,25 @@ export class App extends React.Component<{}, model.ConversionInfo> {
                     </div>
                 </div>
                 <div className="row">
-                    <p style={{ color: "red" }}>{this.state.error}</p>
-                    {this.renderLink()}
+                    <div className="col result-box">
+                        {this.getResultBox()}
+                    </div>
                 </div>
             </div>
         );
     }
 
-    private renderLink(): JSX.Element {
-        const file = this.state.download;
-        if (!this.state.download) {
-            return <p />;
+    private getResultBox(): JSX.Element {
+        if (this.state.error) {
+            return <components.ErrorBox error={this.state.error} />;
         }
-        return <a href={`/api/result/${file}`}>{file}</a>;
+        if (this.state.download) {
+            return <components.ResultBox file={this.state.download} />;
+        }
+        if (this.state.running) {
+            return <components.ProgressBox />;
+        }
+        return <p />;
     }
 
     private runConversion() {

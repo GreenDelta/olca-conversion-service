@@ -7,3 +7,8 @@
 .app-button {
     cursor: pointer;
 }
+
+.result-box {
+    padding: 25px;
+    text-align: center;
+}
