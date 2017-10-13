@@ -1,7 +1,8 @@
-import { FormatCombo } from "./FormatCombo";
 import * as React from "react";
 
+import { FormatCombo } from "./FormatCombo";
 import * as model from "../model/model";
+import * as components from "./components";
 
 export class App extends React.Component<{}, model.ConversionInfo> {
 
@@ -11,6 +12,7 @@ export class App extends React.Component<{}, model.ConversionInfo> {
             url: "http://eplca.jrc.ec.europa.eu/ELCD3/resource/processes/1a7da06d-e8b7-4ff1-920c-209e9009dbe0",
             sourceFormat: model.Format.ILCD,
             targetFormat: model.Format.JSON_LD,
+            running: false,
         };
     }
 
@@ -18,34 +20,30 @@ export class App extends React.Component<{}, model.ConversionInfo> {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="column">
-                        <h1 className="main-header">openLCA Data Conversion Service</h1>
+                    <div className="col">
+                        <h3 className="main-header">openLCA Data Conversion</h3>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="column">
+                    <div className="col">
                         <form>
-                            <fieldset>
-                                <label htmlFor="urlField">Data Set URL</label>
-                                <input
-                                    id="urlField" type="text"
-                                    value={this.state.url}
-                                    onChange={(e) => this.setState({ url: e.target.value })} />
 
-                                <FormatCombo isSource={true}
-                                    selected={this.state.sourceFormat}
-                                    other={this.state.targetFormat}
-                                    onSelet={(f) => this.setState({ sourceFormat: f })} />
+                            <components.UrlBox url={this.state.url}
+                                onChange={(url) => this.setState({ url })} />
 
-                                <FormatCombo isSource={false}
-                                    selected={this.state.targetFormat}
-                                    other={this.state.sourceFormat}
-                                    onSelet={(f) => this.setState({ targetFormat: f })} />
+                            <FormatCombo isSource={true}
+                                selected={this.state.sourceFormat}
+                                other={this.state.targetFormat}
+                                onSelet={(f) => this.setState({ sourceFormat: f })} />
 
-                                <input className="button button-outline app-button-blue"
-                                    value="Convert it!" type="button"
-                                    onClick={() => this.runConversion()} />
-                            </fieldset>
+                            <FormatCombo isSource={false}
+                                selected={this.state.targetFormat}
+                                other={this.state.sourceFormat}
+                                onSelet={(f) => this.setState({ targetFormat: f })} />
+
+                            <input className="app-button btn btn-outline-secondary"
+                                value="Convert it!" type="button"
+                                onClick={() => this.runConversion()} />
                         </form>
                     </div>
                 </div>
@@ -66,14 +64,23 @@ export class App extends React.Component<{}, model.ConversionInfo> {
     }
 
     private runConversion() {
+        this.setState({ error: null, download: null, running: true });
         const req = new XMLHttpRequest();
         req.open("POST", "/api/convert");
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.onload = () => {
             if (req.status !== 200) {
-                this.setState({ error: req.responseText });
+                this.setState({
+                    error: req.responseText,
+                    download: null,
+                    running: false,
+                });
             } else {
-                this.setState({ download: req.responseText });
+                this.setState({
+                    download: req.responseText,
+                    error: null,
+                    running: false,
+                });
             }
         };
         req.send(JSON.stringify(this.state));

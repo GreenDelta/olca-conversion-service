@@ -2,11 +2,8 @@
 .main-header {
     margin-top: 25px;
     text-align: center;
-    color: darkblue;
-    font-weight: bold;
 }
 
-.app-button-blue {
-    color: darkblue !important;
-    border: 0.1rem solid darkblue !important;
+.app-button {
+    cursor: pointer;
 }

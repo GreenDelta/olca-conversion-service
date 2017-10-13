@@ -4,7 +4,9 @@
   "description": "A basic UI for the conversion service",
   "main": "index.js",
   "dependencies": {
-    "milligram": "^1.3.0",
+    "bootstrap": "^4.0.0-beta",
+    "jquery": "^3.2.1",
+    "popper.js": "^1.12.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "requirejs": "^2.3.3"

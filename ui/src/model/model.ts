@@ -12,4 +12,5 @@ export interface ConversionInfo {
     targetFormat: Format;
     error?: string;
     download?: string;
+    running: boolean;
 }

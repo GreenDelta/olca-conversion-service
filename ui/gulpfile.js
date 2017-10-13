@@ -20,14 +20,18 @@ gulp.task('default', ['copy'], () => {
 });
 
 gulp.task('copy', ['clean'], () => {
-    const html = gulp.src(['src/html/*.html', 'src/html/*.css'])
+    const html = gulp.src(['src/html/*.*'])
         .pipe(gulp.dest('build'));
+    const bootstrap = gulp.src('node_modules/bootstrap/dist/**')
+        .pipe(gulp.dest('build/lib/bootstrap'));
     const libs = gulp.src([
+        'node_modules/jquery/dist/jquery.min.js',
+        'node_modules/popper.js/dist/umd/popper.min.js',
         'node_modules/requirejs/require.js',
         'node_modules/react/umd/react.production.min.js',
         'node_modules/react-dom/umd/react-dom.production.min.js',
-        'node_modules/milligram/dist/milligram.min.css',
     ]).pipe(gulp.dest('build/lib'));
+    return merge(html, bootstrap, libs);
 });
 
 gulp.task('clean', () => {

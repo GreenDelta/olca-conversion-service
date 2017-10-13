@@ -14,14 +14,16 @@ export class FormatCombo extends React.Component<Props, {}> {
     public render() {
         const isSource = this.props.isSource;
         const id = isSource ? "sourceCombo" : "targetCombo";
-        return [
-            <label htmlFor={id}>{isSource ? "Source Format" : "Target Format"}</label>,
-            <select id={id}
-                onChange={(e) => this.fireSelect(e.target.value as model.Format)}
-                value={this.props.selected}>
-                {this.getFormats()}
-            </select>,
-        ];
+        return (
+            <div className="form-group">
+                <label htmlFor={id}>{isSource ? "Source Format" : "Target Format"}</label>
+                <select className="form-control" id={id}
+                    onChange={(e) => this.fireSelect(e.target.value as model.Format)}
+                    value={this.props.selected}>
+                    {this.getFormats()}
+                </select>
+            </div>
+        );
     }
 
     private getFormats(): JSX.Element[] {
