@@ -112,32 +112,90 @@ The build script will package the UI in the distribution package if it can find
 it.
 
 
-Current API
------------
+## API
+
+### Conversion Request
+
+* **URL**
+
+  `/api/convert`
+
+* **Method**
+
+  `POST`
+
+* **Data Parameters**
+        
+  An JSON object that describes the conversion, e.g.:
+
+```javascript
+  {
+    // the URL to the source data set
+    "url": "http://eplca.jrc.ec.europa.eu/ELCD3/...",
+    
+    // the format of the source data set
+    // possible values: "EcoSpold 1", "JSON LD", or "ILCD"
+    "sourceFormat": "ILCD",
+    
+    // the target format into which the data set should be converted
+    "targetFormat": "EcoSpold 1"
+  }
+```
+
+* **Success Response:**
+
+  * **Code**: 200 <br />
+    **Content:** Name of the conversion result as plain text, e.g.
+    `"123...2434_ECOSPOLD_1.zip"`
+
+* **Error Response:**
+
+  * **Code**: 501, Not Implemented <br />
+    **Content:** Message about unimplemented data conversion or unknown format.
+  
+  * **Code**: 500, Internal Server Error <br />
+      **Content:** conversion error
+
+
+### Get Conversion Result
+
+* **URL**
+
+  `/api/result/:file`
+
+* **Method**
+
+  `GET`
+
+* **URL Parameters**
+        
+  The file name of a conversion result, e.g. `"123...2434_ECOSPOLD_1.zip"`
+
+* **Success Response:**
+
+  * **Code**: 200 <br />
+    **Content:** A zip file.
+
+* **Error Response:**
+
+  * **Code:** 404, Not Found <br />
+    **Content:** `"File <name> does not exist."`
+  
+
+### Get Cached Data
+
+* **URL**
 
 ```
-  GET  database/processes
-    
-    Returns descriptors of the processes in the openLCA database.
-    
-    MIME type: JSON
-    Example: http://localhost:8080/database/processes
-    
-    
-  GET database/flows
-  
-    Same as database/processes but for flows.
-    
-  
-  GET database/flowProperties
-  
-    Same as database/processes but for flow properties.
-  
-  
-  GET database/unitGroups
-  
-    Same as database/processes but for unit groups.
+  /api/database/processes
+  /api/database/flows
+  /api/database/flowProperties
+  /api/database/unitGroups
 ```
+
+* **Method**
+
+  `GET`
 
 License
 -------
