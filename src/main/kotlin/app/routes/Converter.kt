@@ -54,6 +54,7 @@ class Converter {
         return when(format) {
             Format.ILCD -> ImportILCD()
             Format.ECOSPOLD_1 -> ImportEcoSpold1()
+            Format.JSON_LD -> ImportJSON()
             else -> null
         }
     }

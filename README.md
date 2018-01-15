@@ -14,8 +14,8 @@ or a MySQL database.
 * [x] EcoSpold 1 -> ILCD
 * [x] ILCD -> EcoSpold 1
 * [x] ILCD -> JSON LD
-* [ ] JSON LD -> EcoSpold 1
-* [ ] JSON LD -> ILCD
+* [x] JSON LD -> EcoSpold 1
+* [x] JSON LD -> ILCD
 
 ## Installation
 In order to install the application a Java Runtime Environment >= 8 needs to be
@@ -82,7 +82,7 @@ supported:
 |--------| -------------|------------ |
 | EcoSpold 1 | Plain HTTP server providing the data set | [example from the Needs project](http://www.needs-project.org/needswebdb/scripts/download.php?fileid=4&type=xml) |
 | ILCD | [soda4LCA](https://bitbucket.org/okusche/soda4lca) | [example from the ELCD database](http://eplca.jrc.ec.europa.eu/ELCD3/resource/processes/1a7da06d-e8b7-4ff1-920c-209e9009dbe0) |
-| JSON LD | [openLCA CS](http://www.openlca.org/collaboration-server/) | ? |
+| JSON LD | [openLCA CS](http://www.openlca.org/collaboration-server/) | e.g. http://localhost:8080/ws/public/browse/gdelta/refdata/PROCESS/e33fb2ad-5db5-4ee7-9486-515fce6fd46d |
 
 
 ## Building from source
