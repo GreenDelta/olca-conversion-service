@@ -4,5 +4,6 @@
   "ui": "./web",
   "derbyDB": {
     "folder": "./database"
-  }
+  },
+  "mappings": "./mappings"
 }
