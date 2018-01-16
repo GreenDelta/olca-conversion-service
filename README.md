@@ -52,16 +52,32 @@ The default configuration file looks like this (without the comments):
     // path to a database folder, if it does not exist, an empty database is
     // created
     "folder": "./database"
-  }
+  },
+  
+  // an optional path to a folder with mapping files
+  "mappings": "./mappings"
 }
 ```
 
-A configuration with a MySQL database could look like this (again without the
-comments):
+#### Mapping files
+In the configuration, a folder with mapping files can be specified. The
+conversion service currently supports mapping files for the EcoSpold 1
+(`ecospold_flow_map.csv`) and ILCD (`ilcd_flow_map.csv`) import. You can
+prepare a database with reference flows in [openLCA](http://www.openlca.org/)
+which you can use in the conversion service (see the database configuration
+above). In a conversion, a data set in a specific format is first imported
+into this database and then exported into the target format. In the import,
+the flow mappings are then applied. The mapping files are simple CSV files
+with the following columns:
 
-```javascript
-// TODO: ...
 ```
+0: UUID of the flow in the source format
+1: UUID of the reference flow in the database
+2: a conversion factor f: <amount reference> = f * <amount source>
+``` 
+
+As EcoSpold 1 has no UUIDs, an MD5 based UUID calculated from flow attributes is
+used in this case.
 
 ## How it works
 A client sends a conversion request to the conversion server which includes an
@@ -202,4 +218,3 @@ License
 Unless stated otherwise, all source code of the openLCA project is licensed 
 under the [Mozilla Public License, v. 2.0](http://www.mozilla.org/MPL/2.0/). 
 Please see the LICENSE.txt file in the root directory of the source code.
-    
