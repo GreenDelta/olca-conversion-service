@@ -1,10 +1,11 @@
 {
-  "name": "dama",
+  "name": "convl",
   "version": "1.0.0",
   "description": "A basic UI for the conversion service",
   "main": "index.js",
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
+    "highlight.js": "^9.12.0",
     "jquery": "^3.2.1",
     "popper.js": "^1.12.5",
     "react": "^16.0.0",
@@ -12,6 +13,7 @@
     "requirejs": "^2.3.3"
   },
   "devDependencies": {
+    "@types/highlight.js": "^9.12.2",
     "@types/react": "^16.0.10",
     "@types/react-dom": "^16.0.1",
     "gulp": "^3.9.1",

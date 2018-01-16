@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>openLCA Data Conversion</title>
     <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/github.css">
     <link rel="stylesheet" href="app.css">
 </head>
 
@@ -12,6 +13,7 @@
 
     <div id="app-root"></div>
 
+    <script src="lib/highlight.js"></script>
     <script src="lib/jquery.min.js"></script>
     <script src="lib/popper.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
@@ -21,7 +23,9 @@
     <script src="lib/app.js"></script>
 
     <script>
+        hljs.initHighlightingOnLoad();
         (function () {
+            define('highlight.js', hljs);
             define('react', React);
             define('react-dom', ReactDOM);
             require(['app'], function (app) {

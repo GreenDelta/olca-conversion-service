@@ -30,6 +30,8 @@ gulp.task('copy', ['clean'], () => {
         'node_modules/requirejs/require.js',
         'node_modules/react/umd/react.production.min.js',
         'node_modules/react-dom/umd/react-dom.production.min.js',
+        'node_modules/highlight.js/lib/highlight.js',
+        'node_modules/highlight.js/styles/github.css',
     ]).pipe(gulp.dest('build/lib'));
     return merge(html, bootstrap, libs);
 });

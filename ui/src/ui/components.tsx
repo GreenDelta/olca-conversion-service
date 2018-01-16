@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import * as model from "../model/model";
+
 export const UrlBox: React.SFC<{
     url: string,
     onChange: (url: string) => void,
@@ -24,13 +26,18 @@ export const ErrorBox: React.SFC<{ error: string }> = (props) => {
     );
 };
 
-export const ResultBox: React.SFC<{ file: string }> = (props) => {
+export const ResultBox: React.SFC<{ r: model.Result }> = (props) => {
     return (
-        <div className="alert alert-success" role="alert">
-            The data set was conmverted successfully.{" "}
-            <a href={`/api/result/${props.file}`}
-                title={props.file}
-                className="alert-link">Click here to download it.</a>
+        <div>
+            <div className="alert alert-success" role="alert">
+                The data set was conmverted successfully.{" "}
+                <a href={`/api/result/${props.r.zipFile}`}
+                    title={props.r.zipFile}
+                    className="alert-link">Click here to download it.</a>
+            </div>
+            <pre>
+                <code className="xml">{props.r.process}</code>
+            </pre>
         </div>
     );
 };
