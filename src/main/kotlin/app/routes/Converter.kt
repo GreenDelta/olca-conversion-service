@@ -1,5 +1,6 @@
 package app.routes
 
+import app.Server
 import app.model.*
 import com.google.gson.Gson
 import javax.ws.rs.Consumes
@@ -15,7 +16,6 @@ class Converter {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
     fun convert(body: String): Response {
         val info = Gson().fromJson(body, ConversionInfo::class.java)
         val imp = getImport(info)
@@ -35,7 +35,10 @@ class Converter {
         return try {
             val p = imp.doIt(info.url)
             val file = exp.doIt(p)
-            respond(file.name, Status.OK)
+            val result = ConversionResult()
+            result.zipFile = file.name
+            result.process = Server.workspace!!.process(p.refId, exp.format)
+            Response.ok(result, MediaType.APPLICATION_JSON_TYPE).build()
         } catch (e: Exception) {
             val msg = "Conversion failed: ${e.message}"
             respond(msg, Status.INTERNAL_SERVER_ERROR)
