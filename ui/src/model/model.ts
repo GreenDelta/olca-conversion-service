@@ -4,13 +4,19 @@ export enum Format {
     ILCD = "ILCD",
 }
 
-export const FORMATS = [Format.ECOSPOLD_1, Format.ILCD, Format.JSON_LD];
+export const FORMATS = [
+    Format.ECOSPOLD_1,
+    Format.ILCD,
+    Format.JSON_LD,
+];
 
-export interface ConversionInfo {
+export interface Setup {
     url: string;
     sourceFormat: Format;
     targetFormat: Format;
-    error?: string;
-    download?: string;
-    running: boolean;
+}
+
+export interface Result {
+    zipFile: string;
+    process: string;
 }

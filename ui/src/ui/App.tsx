@@ -4,7 +4,13 @@ import { FormatCombo } from "./FormatCombo";
 import * as model from "../model/model";
 import * as components from "./components";
 
-export class App extends React.Component<{}, model.ConversionInfo> {
+interface State extends model.Setup {
+    result?: model.Result;
+    error?: string;
+    running: boolean;
+}
+
+export class App extends React.Component<{}, State> {
 
     constructor() {
         super();
@@ -60,8 +66,9 @@ export class App extends React.Component<{}, model.ConversionInfo> {
         if (this.state.error) {
             return <components.ErrorBox error={this.state.error} />;
         }
-        if (this.state.download) {
-            return <components.ResultBox file={this.state.download} />;
+        const r = this.state.result;
+        if (r) {
+            return <components.ResultBox file={r.zipFile} />;
         }
         if (this.state.running) {
             return <components.ProgressBox />;
@@ -70,7 +77,7 @@ export class App extends React.Component<{}, model.ConversionInfo> {
     }
 
     private runConversion() {
-        this.setState({ error: null, download: null, running: true });
+        this.setState({ error: null, result: null, running: true });
         const req = new XMLHttpRequest();
         req.open("POST", "/api/convert");
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -78,12 +85,14 @@ export class App extends React.Component<{}, model.ConversionInfo> {
             if (req.status !== 200) {
                 this.setState({
                     error: req.responseText,
-                    download: null,
+                    result: null,
                     running: false,
                 });
             } else {
+                const result = JSON.parse(req.responseText);
+                console.log(result);
                 this.setState({
-                    download: req.responseText,
+                    result,
                     error: null,
                     running: false,
                 });
