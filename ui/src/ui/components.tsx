@@ -26,22 +26,6 @@ export const ErrorBox: React.SFC<{ error: string }> = (props) => {
     );
 };
 
-export const ResultBox: React.SFC<{ r: model.Result }> = (props) => {
-    return (
-        <div>
-            <div className="alert alert-success" role="alert">
-                The data set was conmverted successfully.{" "}
-                <a href={`/api/result/${props.r.zipFile}`}
-                    title={props.r.zipFile}
-                    className="alert-link">Click here to download it.</a>
-            </div>
-            <pre>
-                <code className="xml">{props.r.process}</code>
-            </pre>
-        </div>
-    );
-};
-
 export const ProgressBox: React.SFC<{}> = () => {
     return (
         <div className="alert alert-light" role="alert">

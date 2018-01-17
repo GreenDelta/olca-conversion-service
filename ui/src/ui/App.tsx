@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import * as hljs from "highlight.js";
 
 import { FormatCombo } from "./FormatCombo";
+import { ResultPanel } from "./ResultPanel";
 import * as model from "../model/model";
 import * as components from "./components";
 
@@ -64,31 +64,12 @@ export class App extends React.Component<{}, State> {
         );
     }
 
-    public componentDidMount() {
-        this.highlightResult();
-    }
-
-    public componentDidUpdate() {
-        this.highlightResult();
-    }
-
-    private highlightResult() {
-        console.log("highlight result");
-        const domNode = ReactDOM.findDOMNode(this);
-        const nodes = domNode.querySelectorAll("pre code");
-        for (let i = 0; i < nodes.length; i++) {
-            hljs.highlightBlock(nodes[i]);
-            console.log("highlight result" + i);
-        }
-    }
-
     private getResultBox(): JSX.Element {
         if (this.state.error) {
             return <components.ErrorBox error={this.state.error} />;
         }
-        const r = this.state.result;
-        if (r) {
-            return <components.ResultBox r={r} />;
+        if (this.state.result) {
+            return <ResultPanel result={this.state.result} />;
         }
         if (this.state.running) {
             return <components.ProgressBox />;
