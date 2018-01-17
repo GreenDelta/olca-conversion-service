@@ -39,7 +39,7 @@ func getSampleResult() *Result {
 		ZipFile: "abc...123_ILCD.zip"}
 	r.Process = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <processDataSet xmlns:common="http://lca.jrc.it/ILCD/Common"
-  xmlns="http://lca.jrc.it/ILCD/Process" xmlns:fp="http://lca.jrc.it/ILCD/FlowProperty" xmlns:u="http://lca.jrc.it/ILCD/UnitGroup" version="1.1">
+  xmlns="http://lca.jrc.it/ILCD/Process" version="1.1">
     <processInformation>
 	  <dataSetInformation>
 	    <common:UUID>e33fb2ad-5db5-4ee7-9486-515fce6fd46d</common:UUID>

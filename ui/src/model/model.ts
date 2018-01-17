@@ -17,6 +17,7 @@ export interface Setup {
 }
 
 export interface Result {
+    format: Format;
     zipFile: string;
     process: string;
 }

@@ -20,7 +20,7 @@ export const UrlBox: React.SFC<{
 
 export const ErrorBox: React.SFC<{ error: string }> = (props) => {
     return (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert alert-danger message-box" role="alert">
             Conversion failed: {props.error}
         </div>
     );
@@ -28,7 +28,7 @@ export const ErrorBox: React.SFC<{ error: string }> = (props) => {
 
 export const ProgressBox: React.SFC<{}> = () => {
     return (
-        <div className="alert alert-light" role="alert">
+        <div className="alert alert-light message-box" role="alert">
             Converting ...
             <div>
                 <img src="progress.gif" />

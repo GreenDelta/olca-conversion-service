@@ -11,20 +11,33 @@ export class ResultPanel extends React.Component<Prop, {}> {
 
     public render() {
         const r = this.props.result;
+        const source = this.format(r.process, r.format);
+        const lang = r.format === model.Format.JSON_LD ?
+            Prism.languages.json : Prism.languages.xml;
         const code = Prism.highlight(r.process, Prism.languages.xml);
         return (
             <div>
-                <div className="alert alert-success" role="alert">
+                <div className="alert alert-success message-box" role="alert">
                     The data set was conmverted successfully.{" "}
                     <a href={`/api/result/${r.zipFile}`}
                         title={r.zipFile}
                         className="alert-link">Click here to download it.</a>
                 </div>
                 <pre>
-                    <code className="language-xml">{r.process}</code>
+                    <code dangerouslySetInnerHTML={{ __html: code }} />
                 </pre>
-                <div dangerouslySetInnerHTML={{__html: code}} />
             </div>
         );
+    }
+
+    private format(source: string, format: model.Format): string {
+        if (!source) {
+            return "";
+        }
+        if (format !== model.Format.JSON_LD) {
+            return source;
+        }
+        const obj = JSON.parse(source);
+        return JSON.stringify(obj, null, "  ");
     }
 }
