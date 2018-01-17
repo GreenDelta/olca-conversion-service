@@ -10,6 +10,7 @@ import org.openlca.core.database.IDatabase
 import org.openlca.core.database.MappingFileDao
 import org.openlca.core.database.derby.DerbyDatabase
 import org.openlca.core.model.MappingFile
+import org.openlca.io.maps.Maps
 import org.slf4j.LoggerFactory
 
 class Config {
@@ -44,22 +45,15 @@ class Config {
         val dir = File(mappings)
         if (!dir.exists() || !dir.isDirectory)
             return
-        val dao = MappingFileDao(db)
         dir.listFiles().forEach { f ->
             if (!f.isFile)
                 return@forEach
             val name = f.name
             log.info("import mapping file {}", name)
             try {
-                val old = dao.getForFileName(name)
-                if (old != null) {
-                    log.info("remove old mapping file {}", name)
-                    dao.delete(old)
+                f.inputStream().use { stream ->
+                    Maps.store(f.absolutePath, stream, db)
                 }
-                val mf = MappingFile()
-                mf.fileName = name
-                mf.content = f.readBytes()
-                MappingFileDao(db).insert(mf)
             } catch (e: Exception) {
                 log.error("failed to read mapping file " + f, e)
             }
