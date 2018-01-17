@@ -18,7 +18,7 @@ export class ResultPanel extends React.Component<Prop, {}> {
         return (
             <div>
                 <div className="alert alert-success message-box" role="alert">
-                    The data set was conmverted successfully.{" "}
+                    The data set was converted successfully.{" "}
                     <a href={`/api/result/${r.zipFile}`}
                         title={r.zipFile}
                         className="alert-link">Click here to download it.</a>
