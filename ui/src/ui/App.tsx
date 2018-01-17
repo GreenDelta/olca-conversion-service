@@ -1,12 +1,13 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { FormatCombo } from "./FormatCombo";
+import { SetupPanel } from "./SetupPanel";
 import { ResultPanel } from "./ResultPanel";
 import * as model from "../model/model";
 import * as components from "./components";
 
-interface State extends model.Setup {
+interface State {
+    setup: model.Setup;
     result?: model.Result;
     error?: string;
     running: boolean;
@@ -17,9 +18,11 @@ export class App extends React.Component<{}, State> {
     constructor() {
         super();
         this.state = {
-            url: "http://eplca.jrc.ec.europa.eu/ELCD3/resource/processes/1a7da06d-e8b7-4ff1-920c-209e9009dbe0",
-            sourceFormat: model.Format.ILCD,
-            targetFormat: model.Format.JSON_LD,
+            setup: {
+                url: "http://eplca.jrc.ec.europa.eu/ELCD3/resource/processes/1a7da06d-e8b7-4ff1-920c-209e9009dbe0",
+                sourceFormat: model.Format.ILCD,
+                targetFormat: model.Format.JSON_LD,
+            },
             running: false,
         };
     }
@@ -34,25 +37,10 @@ export class App extends React.Component<{}, State> {
                 </div>
                 <div className="row">
                     <div className="col">
-                        <form>
-
-                            <components.UrlBox url={this.state.url}
-                                onChange={(url) => this.setState({ url })} />
-
-                            <FormatCombo isSource={true}
-                                selected={this.state.sourceFormat}
-                                other={this.state.targetFormat}
-                                onSelet={(f) => this.setState({ sourceFormat: f })} />
-
-                            <FormatCombo isSource={false}
-                                selected={this.state.targetFormat}
-                                other={this.state.sourceFormat}
-                                onSelet={(f) => this.setState({ targetFormat: f })} />
-
-                            <input className="app-button btn btn-outline-secondary"
-                                value="Convert it!" type="button"
-                                onClick={() => this.runConversion()} />
-                        </form>
+                        <SetupPanel
+                            setup={this.state.setup}
+                            onChange={(setup) => this.setState({ setup })}
+                            onRun={() => this.runConversion()} />
                     </div>
                 </div>
                 <div className="row">
@@ -99,6 +87,6 @@ export class App extends React.Component<{}, State> {
                 });
             }
         };
-        req.send(JSON.stringify(this.state));
+        req.send(JSON.stringify(this.state.setup));
     }
 }
