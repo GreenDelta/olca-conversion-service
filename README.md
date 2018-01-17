@@ -161,8 +161,21 @@ it.
 * **Success Response:**
 
   * **Code**: 200 <br />
-    **Content:** Name of the conversion result as plain text, e.g.
-    `"123...2434_ECOSPOLD_1.zip"`
+    **Content:** The conversion result as JSON object:
+
+```javscript
+{
+  // the name of the result package for getting all data set resources via
+  // result request; see below
+  "zipFile": "e.g. 123...2434_ECOSPOLD_1.zip",
+  
+  // the converted process data set
+  "process": "xml or JSON",
+  
+  // the format of the conversion result; "EcoSpold 1", "JSON LD", or "ILCD"
+  "format": "EcoSpold 1"
+}
+```
 
 * **Error Response:**
 

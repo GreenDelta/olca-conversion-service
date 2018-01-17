@@ -38,6 +38,7 @@ class Converter {
             val result = ConversionResult()
             result.zipFile = file.name
             result.process = Server.workspace!!.process(p.refId, exp.format)
+            result.format = exp.format.label
             Response.ok(result, MediaType.APPLICATION_JSON_TYPE).build()
         } catch (e: Exception) {
             val msg = "Conversion failed: ${e.message}"
