@@ -18,8 +18,8 @@ export class NavBar extends React.Component<{}, {}> {
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item active">
                                 <a className="nav-link"
-                                    href="https://github.com/GreenDelta/olca-conversion-service">
-                                    <i className="fa fa-github" aria-hidden="true" />
+                                    href="#">
+                                    <i className="fa fa-sign-in" aria-hidden="true" /> Sign in
                                 </a>
                             </li>
                         </ul>

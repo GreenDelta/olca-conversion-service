@@ -1,3 +1,33 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 40px;
+    color: #455A64;
+  }
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 40px;
+    line-height: 40px; /* Vertically center the text there */
+    background-color: #455A64;
+}
+
+.footer-link {
+    color: white;
+}
+
+.footer-link:hover {
+    color: white;
+    text-decoration: none;
+}
+
 .navbar {
     background-color: #455A64 !important; 
 }
@@ -30,4 +60,33 @@
 
 .message-box {
     text-align: center;
+}
+
+/* Octocat styling: http://tholman.com/github-corners/*/
+.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+}
+
+@keyframes octocat-wave {
+    0%,
+    100% {
+        transform: rotate(0)
+    }
+    20%,
+    60% {
+        transform: rotate(-25deg)
+    }
+    40%,
+    80% {
+        transform: rotate(10deg)
+    }
+}
+
+@media (max-width:500px) {
+    .github-corner:hover .octo-arm {
+        animation: none
+    }
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+    }
 }

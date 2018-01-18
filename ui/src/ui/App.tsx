@@ -7,6 +7,7 @@ import * as model from "../model/model";
 import * as components from "./components";
 import { NavBar } from "./Navbar";
 import { APIPanel } from "./APIPanel";
+import { Footer } from "./Footer";
 
 interface State {
     setup: model.Setup;
@@ -55,6 +56,7 @@ export class App extends React.Component<{}, State> {
                         </div>
                     </div>
                 </div>
+                <Footer />
             </div>
         );
     }
