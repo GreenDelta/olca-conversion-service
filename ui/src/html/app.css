@@ -1,3 +1,10 @@
+.navbar {
+    background-color: #455A64 !important; 
+}
+
+.navbar-brand {
+    color: white !important;
+}
 
 .main-header {
     margin-top: 25px;

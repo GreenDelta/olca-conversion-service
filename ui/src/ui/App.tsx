@@ -5,6 +5,7 @@ import { SetupPanel } from "./SetupPanel";
 import { ResultPanel } from "./ResultPanel";
 import * as model from "../model/model";
 import * as components from "./components";
+import { NavBar } from "./Navbar";
 
 interface State {
     setup: model.Setup;
@@ -29,23 +30,28 @@ export class App extends React.Component<{}, State> {
 
     public render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col">
-                        <h3 className="main-header">openLCA Data Conversion</h3>
+            <div>
+                <NavBar />
+                <div className="container">
+                    <div className="row">
+                        <div className="col">
+                            <h3 className="main-header">
+                                ConvLCA is an open source conversion service for
+                                LCA data based on <a href="http://www.openlca.org/">openLCA</a> 
+                            </h3>
+                            <SetupPanel
+                                setup={this.state.setup}
+                                onChange={(setup) => this.setState({ setup })}
+                                onRun={() => this.runConversion()} />
+                        </div>
+                        <div className="col">
+                            <h3>API</h3>
+                        </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        <SetupPanel
-                            setup={this.state.setup}
-                            onChange={(setup) => this.setState({ setup })}
-                            onRun={() => this.runConversion()} />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col result-box">
-                        {this.getResultBox()}
+                    <div className="row">
+                        <div className="col result-box">
+                            {this.getResultBox()}
+                        </div>
                     </div>
                 </div>
             </div>

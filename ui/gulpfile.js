@@ -32,8 +32,11 @@ gulp.task('copy', ['clean'], () => {
         'node_modules/react-dom/umd/react-dom.production.min.js',
         'node_modules/prismjs/prism.js',
         'node_modules/prismjs/themes/prism.css',
+        'node_modules/font-awesome/css/font-awesome.min.css',
     ]).pipe(gulp.dest('build/lib'));
-    return merge(html, bootstrap, libs);
+    const fonts = gulp.src('node_modules/font-awesome/fonts/**')
+        .pipe(gulp.dest('build/fonts'));
+    return merge(html, bootstrap, libs, fonts);
 });
 
 gulp.task('clean', () => {
