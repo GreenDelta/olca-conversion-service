@@ -26,9 +26,11 @@ export class SetupPanel extends React.Component<Prop, {}> {
                     selected={setup.targetFormat}
                     other={setup.sourceFormat}
                     onSelet={(f) => this.onTargetFormatChange(f)} />
-                <input className="app-button btn btn-outline-secondary"
-                    value="Convert it!" type="button"
-                    onClick={() => this.props.onRun()} />
+                <div className="text-center">
+                    <input className="app-button btn btn-outline-secondary"
+                        value="Convert it!" type="button"
+                        onClick={() => this.props.onRun()} />
+                </div>
             </form>
         );
     }

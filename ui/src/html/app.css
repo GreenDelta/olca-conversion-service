@@ -52,6 +52,15 @@ body {
 
 .app-button {
     cursor: pointer;
+    color: white !important;
+    background-color: #647276 !important;
+    border-color: #647276 !important;
+}
+
+.app-button:hover {
+    color: #647276 !important;
+    background-color: white !important;
+    border-color: #647276 !important;
 }
 
 .result-box {
