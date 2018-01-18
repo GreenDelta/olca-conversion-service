@@ -13,7 +13,7 @@ export class ResultPanel extends React.Component<Prop, {}> {
         const r = this.props.result;
         const source = this.format(r.process, r.format);
         const lang = r.format === model.Format.JSON_LD ?
-            Prism.languages.javascript : Prism.languages.xml;
+            Prism.languages.json : Prism.languages.xml;
         const code = Prism.highlight(source, lang);
         return (
             <div>

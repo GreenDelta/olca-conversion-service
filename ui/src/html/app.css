@@ -7,8 +7,17 @@
 }
 
 .main-header {
-    margin-top: 25px;
-    text-align: center;
+    margin: 25px 0px;
+    color: #647276;
+}
+
+.main-link {
+    color: #647276 !important;
+    font-weight: bold;
+}
+
+.api-panel {
+    margin: 25px;
 }
 
 .app-button {

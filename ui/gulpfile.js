@@ -31,6 +31,8 @@ gulp.task('copy', ['clean'], () => {
         'node_modules/react/umd/react.production.min.js',
         'node_modules/react-dom/umd/react-dom.production.min.js',
         'node_modules/prismjs/prism.js',
+        'node_modules/prismjs/components/prism-json.min.js',
+        'node_modules/prismjs/components/prism-python.min.js',
         'node_modules/prismjs/themes/prism.css',
         'node_modules/font-awesome/css/font-awesome.min.css',
     ]).pipe(gulp.dest('build/lib'));

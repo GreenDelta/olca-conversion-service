@@ -6,6 +6,7 @@ import { ResultPanel } from "./ResultPanel";
 import * as model from "../model/model";
 import * as components from "./components";
 import { NavBar } from "./Navbar";
+import { APIPanel } from "./APIPanel";
 
 interface State {
     setup: model.Setup;
@@ -34,18 +35,18 @@ export class App extends React.Component<{}, State> {
                 <NavBar />
                 <div className="container">
                     <div className="row">
-                        <div className="col">
+                        <div className="col-md-6">
                             <h3 className="main-header">
                                 ConvLCA is an open source conversion service for
-                                LCA data based on <a href="http://www.openlca.org/">openLCA</a> 
+                                LCA data based on <a className="main-link" href="http://www.openlca.org/">openLCA</a>
                             </h3>
                             <SetupPanel
                                 setup={this.state.setup}
                                 onChange={(setup) => this.setState({ setup })}
                                 onRun={() => this.runConversion()} />
                         </div>
-                        <div className="col">
-                            <h3>API</h3>
+                        <div className="col-md-6">
+                            <APIPanel setup={this.state.setup}/>
                         </div>
                     </div>
                     <div className="row">
