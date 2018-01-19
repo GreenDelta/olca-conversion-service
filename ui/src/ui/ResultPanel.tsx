@@ -16,16 +16,15 @@ export class ResultPanel extends React.Component<Prop, {}> {
             Prism.languages.json : Prism.languages.xml;
         const code = Prism.highlight(source, lang);
         return (
-            <div>
-                <div className="alert alert-success message-box" role="alert">
-                    The data set was converted successfully.{" "}
-                    <a href={`/api/result/${r.zipFile}`}
-                        title={r.zipFile}
-                        className="alert-link">Click here to download it.</a>
+            <div className="card">
+                <div className="card-header">
+                    Converted process data set ({r.format} format):
                 </div>
-                <pre>
-                    <code dangerouslySetInnerHTML={{ __html: code }} />
-                </pre>
+                <div className="card-body">
+                    <pre>
+                        <code dangerouslySetInnerHTML={{ __html: code }} />
+                    </pre>
+                </div>
             </div>
         );
     }

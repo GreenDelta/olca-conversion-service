@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import { FormatCombo } from "./FormatCombo";
-import * as components from "./components";
 import * as model from "../model/model";
 
 interface Prop {
@@ -16,7 +15,7 @@ export class SetupPanel extends React.Component<Prop, {}> {
         const setup = this.props.setup;
         return (
             <form>
-                <components.UrlBox url={setup.url}
+                <UrlBox url={setup.url}
                     onChange={(url) => this.onUrlChange(url)} />
                 <FormatCombo isSource={true}
                     selected={setup.sourceFormat}
@@ -82,3 +81,19 @@ export class SetupPanel extends React.Component<Prop, {}> {
     }
 
 }
+
+const UrlBox: React.SFC<{
+    url: string,
+    onChange: (url: string) => void,
+}> = (props) => {
+    return (
+        <div className="form-group">
+            <label htmlFor="urlField">Data Set URL</label>
+            <input
+                className="form-control"
+                id="urlField" type="text"
+                value={props.url}
+                onChange={(e) => props.onChange(e.target.value)} />
+        </div>
+    );
+};

@@ -4,10 +4,10 @@ import * as ReactDOM from "react-dom";
 import { SetupPanel } from "./SetupPanel";
 import { ResultPanel } from "./ResultPanel";
 import * as model from "../model/model";
-import * as components from "./components";
 import { NavBar } from "./Navbar";
 import { APIPanel } from "./APIPanel";
 import { Footer } from "./Footer";
+import { MessagePanel } from "./MessagePanel";
 
 interface State {
     setup: model.Setup;
@@ -45,6 +45,7 @@ export class App extends React.Component<{}, State> {
                                 setup={this.state.setup}
                                 onChange={(setup) => this.setState({ setup })}
                                 onRun={() => this.runConversion()} />
+                            <MessagePanel {...this.state} />
                         </div>
                         <div className="col-md-6">
                             <APIPanel setup={this.state.setup}/>
@@ -52,7 +53,7 @@ export class App extends React.Component<{}, State> {
                     </div>
                     <div className="row">
                         <div className="col result-box">
-                            {this.getResultBox()}
+                            {this.getResultPanel()}
                         </div>
                     </div>
                 </div>
@@ -61,15 +62,9 @@ export class App extends React.Component<{}, State> {
         );
     }
 
-    private getResultBox(): JSX.Element {
-        if (this.state.error) {
-            return <components.ErrorBox error={this.state.error} />;
-        }
+    private getResultPanel(): JSX.Element {
         if (this.state.result) {
             return <ResultPanel result={this.state.result} />;
-        }
-        if (this.state.running) {
-            return <components.ProgressBox />;
         }
         return <p />;
     }

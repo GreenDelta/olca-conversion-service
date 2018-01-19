@@ -47,7 +47,7 @@ body {
 }
 
 .api-panel {
-    margin: 25px;
+    margin-top: 25px;
 }
 
 .app-button {
@@ -64,11 +64,12 @@ body {
 }
 
 .result-box {
-    padding: 25px;
+    margin: 25px 0px;
 }
 
 .message-box {
     text-align: center;
+    margin-top: 25px;
 }
 
 /* Octocat styling: http://tholman.com/github-corners/*/

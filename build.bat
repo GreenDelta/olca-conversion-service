@@ -1,6 +1,6 @@
 @echo off
 
-SET version=0.0.2
+SET version=0.0.3
 
 FOR /f "tokens=2 delims==" %%a IN ('wmic OS Get localdatetime /value') DO SET "dt=%%a"
 set "YYYY=%dt:~0,4%"
