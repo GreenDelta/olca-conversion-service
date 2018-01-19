@@ -60,7 +60,7 @@ object Server {
         val resourceConfig = ResourceConfig().packages(
                 "app.routes")
         val server = GrizzlyHttpServerFactory.createHttpServer(URI.create(
-                "http://localhost:" + config.port + "/api"), resourceConfig)
+                "http://${config.host}:${config.port}/api"), resourceConfig)
         if (config.ui != null) {
             val uiDir = File(config.ui!!)
             if (uiDir.isDirectory) {

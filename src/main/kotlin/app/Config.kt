@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory
 
 class Config {
 
+    var host = "localhost"
     var port: Int = 8080
     var workspace = "workspace"
     var ui: String? = null

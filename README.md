@@ -20,23 +20,36 @@ or a MySQL database.
 ## Installation
 In order to install the application a Java Runtime Environment >= 8 needs to be
 installed. Then, unzip the distribution package. It contains the application as
-a single jar file, a startup script, a basic web UI, and a configuration file.
-Running the startup script should directly start the server with the default
-configurations:
+a single jar file, a basic web UI, and a configuration file. You can start
+the application via the following command:
 
 ```bash
-cd olca-conv...
-run
+java -jar server.jar
 ```
 
-You should then be able to open the web UI in a browser at
-[http://localhost](http://localhost).
+On a Linux server you probably want to start the server as a
+[background process](https://stackoverflow.com/questions/4797050/how-to-run-process-as-background-and-never-die)
+from a shell. One solution to do this, is `nohup`:
+
+```bash
+nohup java -jar server.jar &
+```
+
+If your shell does not return the process ID (to kill the process later) you can
+get it via:
+
+```bash
+echo $!
+```
 
 ### Configuration
 The default configuration file looks like this (without the comments):
 
 ```javascript
 {
+  // the application host
+  "host": "localhost",
+
   // the port of the application
   "port": 80,
 
