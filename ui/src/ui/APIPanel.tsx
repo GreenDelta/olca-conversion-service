@@ -7,6 +7,8 @@ interface Props {
     setup: model.Setup;
 }
 
+const API_ENDPOINT = "http://localhost/api/";
+
 export class APIPanel extends React.Component<Props, {}> {
 
     public render() {
@@ -15,7 +17,8 @@ export class APIPanel extends React.Component<Props, {}> {
             <div className="api-panel">
                 <div className="card">
                     <div className="card-header">
-                        Python
+                        The conversion service provides a simple web API which
+                        you can access from any language; e.g. from Python:
                     </div>
                     <div className="card-body">
                         <pre>
@@ -29,23 +32,32 @@ export class APIPanel extends React.Component<Props, {}> {
 
     private pythonSource() {
         const setup = this.props.setup;
-        const source = `import requests
+        const source = `
+import requests
 
-API_ENDPOINT = "http://localhost/"
+API_ENDPOINT = "${API_ENDPOINT}"
 
 def main():
+    # convert a data set
     setup = {
         "url": "${setup.url}",
         "sourceFormat": "${setup.sourceFormat}",
         "targetFormat": "${setup.targetFormat}"
     }
-    response = requests.post(API_ENDPOINT + "convert", json=setup)
-    if response.status_code != 200:
-        print("Conversion failed: " + response.text)
+    r = requests.post(API_ENDPOINT + "convert", json=setup)
+    if r.status_code != 200:
+        print("Conversion failed: " + r.text)
         exit(1)
+    data = r.json()
 
-if __name__ == '__main__':
-    main()`;
+    # download the data set
+    r = requests.get(API_ENDPOINT + "result/" + data["zipFile"], stream=True)
+    with open(data["zipFile"], 'wb') as f:
+        for chunk in r:
+            f.write(chunk)
+
+if __name__ == "__main__":
+    main()`.trim();
         return Prism.highlight(source, Prism.languages.python);
     }
 
