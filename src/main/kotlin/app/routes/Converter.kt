@@ -3,10 +3,10 @@ package app.routes
 import app.Server
 import app.model.*
 import com.google.gson.Gson
+import org.openlca.core.database.IDatabase
 import javax.ws.rs.Consumes
 import javax.ws.rs.POST
 import javax.ws.rs.Path
-import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.Response.Status
@@ -32,17 +32,22 @@ class Converter {
     }
 
     private fun doIt(info: ConversionInfo, imp: Import, exp: Export): Response {
+        var db: IDatabase? = null
         return try {
-            val p = imp.doIt(info.url)
-            val file = exp.doIt(p)
+            val refSystem = Server.getRefSystem(info.refSystem)
+            db = refSystem.db()
+            val p = imp.doIt(info.url, db)
+            val file = exp.doIt(p, db)
             val result = ConversionResult()
             result.zipFile = file.name
-            result.process = Server.workspace!!.process(p.refId, exp.format)
+            result.process = Server.cache!!.process(p.refId, exp.format)
             result.format = exp.format.label
             Response.ok(result, MediaType.APPLICATION_JSON_TYPE).build()
         } catch (e: Exception) {
             val msg = "Conversion failed: ${e.message}"
             respond(msg, Status.INTERNAL_SERVER_ERROR)
+        } finally {
+            db?.close()
         }
     }
 

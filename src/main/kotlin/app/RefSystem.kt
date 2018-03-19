@@ -20,17 +20,16 @@ class RefSystem private constructor(
 
         private val log = LoggerFactory.getLogger(RefSystem::class.java)
 
-        fun initialize(folder: String): RefSystem {
+        fun initialize(folder: File): RefSystem {
             log.info("Initialize reference system under {}", folder)
-            val dir = File(folder)
-            if (!dir.exists()) {
-                dir.mkdirs()
+            if (!folder.exists()) {
+                folder.mkdirs()
             }
-            val dumpDir = File(dir, "dump")
+            val dumpDir = File(folder, "dump")
             if (!dumpDir.exists()) {
-                initDump(dir)
+                initDump(folder)
             }
-            return RefSystem(dir.name, dumpDir.absolutePath)
+            return RefSystem(folder.name, dumpDir.absolutePath)
         }
 
         private fun initDump(dir: File) {
@@ -46,6 +45,7 @@ class RefSystem private constructor(
             }
             val dumpDir = File(dir, "dump")
             memDB.dump(dumpDir.absolutePath)
+            memDB.close()
         }
 
         private fun importJson(dataFile: File, db: IDatabase) {

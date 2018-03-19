@@ -37,7 +37,7 @@ class LcaRepo(private val url: String) : EntityStore {
     }
 
     override fun get(path: String): ByteArray {
-        URL(url + "/" + path).openStream().use { stream ->
+        URL("$url/$path").openStream().use { stream ->
             return stream.readBytes()
         }
     }

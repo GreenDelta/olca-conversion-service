@@ -13,7 +13,7 @@ class Result {
     @GET
     @Path("{name}")
     fun get(@PathParam("name") name: String): Response {
-        val file = Server.workspace!!.file(name)
+        val file = Server.cache!!.file(name)
         if (!file.exists()) {
             return Response.status(Response.Status.NOT_FOUND)
                     .type(MediaType.TEXT_PLAIN)

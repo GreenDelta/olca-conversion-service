@@ -7,9 +7,7 @@ import java.util.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 
-class Workspace(path: String) {
-
-    private val dir = File(path)
+class Cache(private val dir: File) {
 
     init {
         if (!dir.exists()) {
@@ -46,8 +44,8 @@ class Workspace(path: String) {
 
     /**
      * Returns the process with the given ID and format from the respective
-     * ZIP file in the workspace (so there must be a conversion result for
-     * this process in the workspace). It returns an empty string if no such
+     * ZIP file in the cache (so there must be a conversion result for
+     * this process in the cache). It returns an empty string if no such
      * process could be found.
      */
     fun process(id: String, format: Format): String {

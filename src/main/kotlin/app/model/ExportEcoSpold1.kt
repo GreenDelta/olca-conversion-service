@@ -1,6 +1,7 @@
 package app.model
 
 import app.Server
+import org.openlca.core.database.IDatabase
 import org.openlca.core.model.Process
 import org.openlca.io.ecospold1.output.EcoSpold1Export
 import org.openlca.io.ecospold1.output.ExportConfig
@@ -13,13 +14,13 @@ class ExportEcoSpold1: Export {
 
     override val format = Format.ECOSPOLD_1
 
-    private val workspace = Server.workspace!!
+    private val cache = Server.cache!!
 
-    override fun doIt(p: Process): File {
-        val file = workspace.file(p.refId, format)
+    override fun doIt(p: Process, db: IDatabase): File {
+        val file = cache.file(p.refId, format)
         if (file.exists())
             return file
-        val dir = workspace.tempDir()
+        val dir = cache.tempDir()
         val exp = EcoSpold1Export(dir, ExportConfig.getDefault())
         exp.export(p)
         exp.close()
@@ -28,15 +29,15 @@ class ExportEcoSpold1: Export {
     }
 
     private fun packIt(dir: File, file: File) {
-        val tmp = workspace.tempFile()
+        val tmp = cache.tempFile()
         val stream = ZipOutputStream(BufferedOutputStream(tmp.outputStream()))
         val files = mutableListOf<File>()
         collectFiles(dir, files)
-        stream.use { stream ->
+        stream.use { s ->
             files.forEach { file ->
                 val entry = ZipEntry(file.name)
-                stream.putNextEntry(entry)
-                file.inputStream().use { it.copyTo(stream) }
+                s.putNextEntry(entry)
+                file.inputStream().use { it.copyTo(s) }
             }
         }
         tmp.copyTo(file, overwrite = true)
