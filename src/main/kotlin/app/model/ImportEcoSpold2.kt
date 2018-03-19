@@ -14,7 +14,7 @@ class ImportEcoSpold2 : Import {
 
     override fun doIt(url: String, db: IDatabase): Process {
         log.info("import EcoSpold 2 from {}", url)
-        val tempFile = Server.cache!!.tempFile()
+        val tempFile = Server.cache!!.tempFile(ext = ".spold")
         log.debug("copy data to {}", tempFile)
         URL(url).openStream().use { input ->
             tempFile.outputStream().use { output ->

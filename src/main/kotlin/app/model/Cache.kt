@@ -36,12 +36,12 @@ class Cache(private val dir: File) {
         return d
     }
 
-    fun tempFile(): File {
+    fun tempFile(ext: String = ""): File {
         val temp = File(dir, "temp")
         if (!temp.exists()) {
             temp.mkdirs()
         }
-        return File(temp, UUID.randomUUID().toString())
+        return File(temp, UUID.randomUUID().toString() + ext)
     }
 
     /**
