@@ -7,9 +7,7 @@ import java.io.InputStreamReader
 
 import com.google.gson.Gson
 import org.openlca.core.database.IDatabase
-import org.openlca.core.database.MappingFileDao
 import org.openlca.core.database.derby.DerbyDatabase
-import org.openlca.core.model.MappingFile
 import org.openlca.io.maps.Maps
 import org.slf4j.LoggerFactory
 
@@ -56,7 +54,7 @@ class Config {
                     Maps.store(f.absolutePath, stream, db)
                 }
             } catch (e: Exception) {
-                log.error("failed to read mapping file " + f, e)
+                log.error("failed to read mapping file $f", e)
             }
         }
     }

@@ -72,6 +72,44 @@ The default configuration file looks like this (without the comments):
 }
 ```
 
+#### Reference systems
+The conversion service can be configured to run with different reference
+systems where a reference system contains a set of reference data like
+elementary flows, quantities, units etc. and mapping files which are used in the
+conversion. The data of the reference systems are stored under the directory
+`refsystems` of the `workspace` folder. Each reference system is stored in a
+sub-folder of the `refsystems` directory and is identified by the name of this
+sub-folder. 
+
+There is at least one `default` reference system which is created automatically
+on server startup if it does not exist. When a conversion request does not
+specify a reference system, the `default` reference system is taken in the
+conversion. The data of a reference system are stored in a file `data.zip` in
+the folder of the reference system. The content of the `data.zip` file should
+be provided in the [openLCA JSON-LD format](https://github.com/GreenDelta/olca-schema)
+as produced by the openLCA export. Additionally, a set of mapping files (see
+below) can be provided in a sub-folder `mappings` in the data directory of the
+reference system.
+
+On server startup, a data dump for each reference system is created if it does
+not exist yet. For each conversion against a reference system the dump of this
+system is loaded into memory and used for the conversion. Thus, to update the
+data of a reference system, just update the `data.zip` and mapping files,
+delete the `dump` folder and restart the server.
+
+```
+- workspace
+  - refsystems
+     - default
+       + dump
+       + mappings
+       - data.zip
+     - myrefsystem
+       + dump
+       + mappings
+       - data.zip 
+```
+
 #### Mapping files
 In the configuration, a folder with mapping files can be specified. The
 conversion service currently supports mapping files for the EcoSpold 1
