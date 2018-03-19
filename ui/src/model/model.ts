@@ -1,11 +1,13 @@
 export enum Format {
     ECOSPOLD_1 = "EcoSpold 1",
+    ECOSPOLD_2 = "EcoSpold 2",
     JSON_LD = "JSON LD",
     ILCD = "ILCD",
 }
 
 export const FORMATS = [
     Format.ECOSPOLD_1,
+    Format.ECOSPOLD_2,
     Format.ILCD,
     Format.JSON_LD,
 ];

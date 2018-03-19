@@ -74,6 +74,7 @@ class Converter {
             Format.JSON_LD -> ExportJSON()
             Format.ILCD -> ExportILCD()
             Format.ECOSPOLD_1 -> ExportEcoSpold1()
+            Format.ECOSPOLD_2 -> ExportEcoSpold2()
             else -> null
         }
     }

@@ -1,11 +1,13 @@
 package app.model
 
 import org.slf4j.LoggerFactory
+import java.io.BufferedOutputStream
 import java.io.File
 import java.nio.charset.Charset
 import java.util.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
+import java.util.zip.ZipOutputStream
 
 class Cache(private val dir: File) {
 
@@ -75,5 +77,37 @@ class Cache(private val dir: File) {
                 return e
         }
         return null
+    }
+
+    /**
+     * Creates a zip file from the files in the given temporary folder and
+     * then deletes the folder. This is used for the EcoSpold exports that do
+     * not create zip files.
+     */
+    fun zipFilesAndClean(tempDir: File, zip: File) {
+        val tmp = tempFile()
+        val stream = ZipOutputStream(BufferedOutputStream(tmp.outputStream()))
+        val files = mutableListOf<File>()
+        collectFiles(tempDir, files)
+        stream.use { s ->
+            files.forEach { file ->
+                val entry = ZipEntry(file.name)
+                s.putNextEntry(entry)
+                file.inputStream().use { it.copyTo(s) }
+            }
+        }
+        tmp.copyTo(zip, overwrite = true)
+        tmp.delete()
+        tempDir.deleteRecursively()
+    }
+
+    private fun collectFiles(dir: File, files: MutableList<File>) {
+        dir.listFiles().forEach { f ->
+            if (f.isDirectory) {
+                collectFiles(f, files)
+            } else {
+                files.add(f)
+            }
+        }
     }
 }

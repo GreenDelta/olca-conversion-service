@@ -2,6 +2,7 @@ package app.model
 
 enum class Format(val label: String) {
     ECOSPOLD_1("EcoSpold 1"),
+    ECOSPOLD_2("EcoSpold 2"),
     ILCD("ILCD"),
     JSON_LD("JSON LD");
 

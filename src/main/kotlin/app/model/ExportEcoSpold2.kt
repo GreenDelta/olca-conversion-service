@@ -3,16 +3,13 @@ package app.model
 import app.Server
 import org.openlca.core.database.IDatabase
 import org.openlca.core.model.Process
-import org.openlca.io.ecospold1.output.EcoSpold1Export
-import org.openlca.io.ecospold1.output.ExportConfig
-import java.io.BufferedOutputStream
+import org.openlca.core.model.descriptors.Descriptors
+import org.openlca.io.ecospold2.output.EcoSpold2Export
 import java.io.File
-import java.util.zip.ZipEntry
-import java.util.zip.ZipOutputStream
 
-class ExportEcoSpold1: Export {
+class ExportEcoSpold2 : Export {
 
-    override val format = Format.ECOSPOLD_1
+    override val format = Format.ECOSPOLD_2
 
     private val cache = Server.cache!!
 
@@ -21,10 +18,11 @@ class ExportEcoSpold1: Export {
         if (file.exists())
             return file
         val dir = cache.tempDir()
-        val exp = EcoSpold1Export(dir, ExportConfig.getDefault())
-        exp.export(p)
-        exp.close()
+        val descriptors = listOf(Descriptors.toDescriptor(p))
+        val exp = EcoSpold2Export(dir, db, descriptors)
+        exp.run()
         cache.zipFilesAndClean(dir, file)
         return file
     }
+
 }
