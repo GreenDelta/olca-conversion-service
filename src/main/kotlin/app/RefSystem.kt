@@ -13,7 +13,9 @@ class RefSystem private constructor(
         private val dumpFolder: String) {
 
     fun db(): IDatabase {
-        return DerbyDatabase.restoreInMemory(dumpFolder)
+        val db = DerbyDatabase.restoreInMemory(dumpFolder)
+        // TODO db.fileStorageLocation = Server.cache!!.tempDir()
+        return db
     }
 
     companion object {

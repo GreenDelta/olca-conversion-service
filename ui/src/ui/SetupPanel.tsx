@@ -68,6 +68,9 @@ export class SetupPanel extends React.Component<Prop, {}> {
         if (url.indexOf("/PROCESS/") >= 0) {
             return model.Format.JSON_LD;
         }
+        if (url.indexOf(".spold")) {
+            return model.Format.ECOSPOLD_2;
+        }
         return model.Format.ECOSPOLD_1;
     }
 

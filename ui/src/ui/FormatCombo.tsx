@@ -30,9 +30,6 @@ export class FormatCombo extends React.Component<Props, {}> {
         const isSource = this.props.isSource;
         const options = [];
         for (const f of model.FORMATS) {
-            if (!isSource && f === this.props.other) {
-                continue;
-            }
             options.push(<option value={f}>{f}</option>);
         }
         return options;
