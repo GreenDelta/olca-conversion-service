@@ -24,6 +24,7 @@ class ImportEcoSpold2 : Import {
         val imp = EcoSpold2Import(db, arrayOf(tempFile))
         imp.run()
         log.debug("data imported; delete file {}", tempFile)
+        tempFile.delete()
         return findProcess(db)
     }
 
