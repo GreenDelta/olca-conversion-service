@@ -35,7 +35,7 @@ class Converter {
         var db: IDatabase? = null
         return try {
             val refSystem = Server.getRefSystem(info.refSystem)
-            db = refSystem.db()
+            db = refSystem.newDB()
             val p = imp.doIt(info.url, db)
             val file = exp.doIt(p, db)
             val result = ConversionResult()
@@ -47,7 +47,10 @@ class Converter {
             val msg = "Conversion failed: ${e.message}"
             respond(msg, Status.INTERNAL_SERVER_ERROR)
         } finally {
-            db?.close()
+            db?.let {
+                db.close()
+                db.fileStorageLocation.deleteRecursively()
+            }
         }
     }
 
