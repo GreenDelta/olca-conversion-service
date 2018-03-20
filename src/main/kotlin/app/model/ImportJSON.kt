@@ -7,7 +7,8 @@ import org.openlca.jsonld.input.JsonImport
 
 class ImportJSON : Import {
 
-    override fun doIt(url: String, db: IDatabase): Process {
+    override fun doIt(setup: ConversionSetup, db: IDatabase): Process {
+        val url = setup.url
         if (!url.contains("/PROCESS/"))
             throw Exception("Invalid URL: $url")
         val parts = url.split("/PROCESS/")

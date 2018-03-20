@@ -17,7 +17,7 @@ class Converter {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     fun convert(body: String): Response {
-        val info = Gson().fromJson(body, ConversionInfo::class.java)
+        val info = Gson().fromJson(body, ConversionSetup::class.java)
         val imp = getImport(info)
         if (imp == null) {
             val msg = "unsupported source format: ${info.sourceFormat}"
@@ -31,12 +31,12 @@ class Converter {
         return doIt(info, imp, exp)
     }
 
-    private fun doIt(info: ConversionInfo, imp: Import, exp: Export): Response {
+    private fun doIt(setup: ConversionSetup, imp: Import, exp: Export): Response {
         var db: IDatabase? = null
         return try {
-            val refSystem = Server.getRefSystem(info.refSystem)
+            val refSystem = Server.getRefSystem(setup.refSystem)
             db = refSystem.newDB()
-            val p = imp.doIt(info.url, db)
+            val p = imp.doIt(setup, db)
             val file = exp.doIt(p, db)
             val result = ConversionResult()
             result.zipFile = file.name
@@ -61,8 +61,8 @@ class Converter {
                 .build()
     }
 
-    private fun getImport(info: ConversionInfo): Import? {
-        val format = Format.get(info.sourceFormat)
+    private fun getImport(setup: ConversionSetup): Import? {
+        val format = Format.get(setup.sourceFormat)
         return when(format) {
             Format.ILCD -> ImportILCD()
             Format.ECOSPOLD_1 -> ImportEcoSpold1()
@@ -72,8 +72,8 @@ class Converter {
         }
     }
 
-    private fun getExport(info: ConversionInfo): Export? {
-        val format = Format.get(info.targetFormat)
+    private fun getExport(setup: ConversionSetup): Export? {
+        val format = Format.get(setup.targetFormat)
         return when(format) {
             Format.JSON_LD -> ExportJSON()
             Format.ILCD -> ExportILCD()

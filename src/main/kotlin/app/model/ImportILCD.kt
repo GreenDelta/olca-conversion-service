@@ -9,7 +9,8 @@ import org.openlca.io.ilcd.input.ImportConfig
 
 class ImportILCD : Import {
 
-    override fun doIt(url: String, db: IDatabase): Process {
+    override fun doIt(setup: ConversionSetup, db: IDatabase): Process {
+        val url = setup.url
         if (url.isEmpty() || !url.contains("/processes/"))
             throw Exception("Invalid URL: $url")
         val parts = url.split("/processes/")
@@ -22,6 +23,7 @@ class ImportILCD : Import {
         val client = SodaClient(con)
         client.connect()
         val conf = ImportConfig(client, db)
+        conf.flowMap = setup.flowMap()
         val imp = ILCDImport(conf)
         imp.importProcess(id)
         return DB.get(id, db)!!

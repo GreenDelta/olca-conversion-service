@@ -5,6 +5,6 @@ import org.openlca.core.model.Process
 
 interface Import {
 
-    fun doIt(url: String, db: IDatabase): Process
+    fun doIt(setup: ConversionSetup, db: IDatabase): Process
 
 }
