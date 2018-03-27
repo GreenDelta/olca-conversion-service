@@ -2,7 +2,7 @@ package app.model
 
 import app.Server
 import org.openlca.core.database.IDatabase
-import org.openlca.core.model.Process
+import org.openlca.core.database.ProcessDao
 import org.openlca.io.ilcd.ILCDExport
 import org.openlca.io.ilcd.output.ExportConfig
 import java.io.File
@@ -11,13 +11,11 @@ class ExportILCD : Export {
 
     override val format = Format.ILCD
 
-    override fun doIt(p: Process, db: IDatabase): File {
-        val file = Server.cache!!.file(p.refId, format)
-        if (file.exists())
-            return file
+    override fun doIt(db: IDatabase): File {
+        val file = Server.cache!!.nextZip()
         val conf = ExportConfig(db, file)
         val exp = ILCDExport(conf)
-        exp.export(p)
+        ProcessDao(db).all.forEach { exp.export(it) }
         exp.close()
         return file
     }

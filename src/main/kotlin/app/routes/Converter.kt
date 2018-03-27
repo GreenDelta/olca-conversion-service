@@ -36,11 +36,11 @@ class Converter {
         return try {
             val refSystem = Server.getRefSystem(setup.refSystem)
             db = refSystem.newDB()
-            val p = imp.doIt(setup, db)
-            val file = exp.doIt(p, db)
+            imp.doIt(setup, db)
+            val zipFile = exp.doIt(db)
             val result = ConversionResult()
-            result.zipFile = file.name
-            result.process = Server.cache!!.process(p.refId, exp.format)
+            result.zipFile = zipFile.name
+            result.process = Server.cache!!.firstProcess(db, zipFile)
             result.format = exp.format.label
             Response.ok(result, MediaType.APPLICATION_JSON_TYPE).build()
         } catch (e: Exception) {

@@ -1,10 +1,12 @@
 package app.model
 
+import org.openlca.core.database.IDatabase
+import org.openlca.core.database.ProcessDao
 import org.slf4j.LoggerFactory
 import java.io.BufferedOutputStream
 import java.io.File
 import java.nio.charset.Charset
-import java.util.*
+import java.util.UUID
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
@@ -17,12 +19,19 @@ class Cache(private val dir: File) {
         }
     }
 
-    fun file(processID: String, format: Format): File {
-        val name = "${processID}_${format.name}.zip"
+    /**
+     * Conversion results are stored in plain zip files. This method
+     * returns a new zip file that does not yet exist.
+     */
+    fun nextZip(): File {
+        val name = UUID.randomUUID().toString() + ".zip"
         return File(dir, name)
     }
 
-    fun file(name: String): File {
+    /**
+     * Returns the file with the given name from the cache directory.
+     */
+    fun getFile(name: String): File {
         return File(dir, name)
     }
 
@@ -45,17 +54,19 @@ class Cache(private val dir: File) {
     }
 
     /**
-     * Returns the process with the given ID and format from the respective
-     * ZIP file in the cache (so there must be a conversion result for
-     * this process in the cache). It returns an empty string if no such
-     * process could be found.
+     * Returns the first process from the given zip file in the target format
+     * of a conversion. During the conversion we import the processes from
+     * the source format into a database. Thus, there should be a file with
+     * a process ID in the given zip. This is a convenience method so that we
+     * can directly return a converted process in a conversion request.
      */
-    fun process(id: String, format: Format): String {
-        val f = file(id, format)
-        if (!f.exists())
-            return ""
+    fun firstProcess(db: IDatabase, zipFile: File): String {
         try {
-            ZipFile(f).use { zip ->
+            val descriptors = ProcessDao(db).descriptors
+            if (descriptors.isEmpty())
+                return ""
+            val id = descriptors.first().refId
+            ZipFile(zipFile).use { zip ->
                 val e = findEntry(id, zip) ?: return ""
                 zip.getInputStream(e).buffered().use { stream ->
                     return String(stream.readBytes(),
@@ -64,9 +75,9 @@ class Cache(private val dir: File) {
             }
         } catch (e: Exception) {
             val log = LoggerFactory.getLogger(javaClass)
-            log.error("failed to get process text from " + f, e)
+            log.error("failed to get process text from $zipFile", e)
+            return ""
         }
-        return ""
     }
 
     private fun findEntry(id: String, zip: ZipFile): ZipEntry? {
@@ -82,9 +93,10 @@ class Cache(private val dir: File) {
     /**
      * Creates a zip file from the files in the given temporary folder and
      * then deletes the folder. This is used for the EcoSpold exports that do
-     * not create zip files.
+     * not create zip files but currently export their results into a folder.
+     * The created zip file is the returned by this method.
      */
-    fun zipFilesAndClean(tempDir: File, zip: File) {
+    fun zipFilesAndClean(tempDir: File): File {
         val tmp = tempFile()
         val stream = ZipOutputStream(BufferedOutputStream(tmp.outputStream()))
         val files = mutableListOf<File>()
@@ -96,9 +108,11 @@ class Cache(private val dir: File) {
                 file.inputStream().use { it.copyTo(s) }
             }
         }
+        val zip = nextZip()
         tmp.copyTo(zip, overwrite = true)
         tmp.delete()
         tempDir.deleteRecursively()
+        return zip
     }
 
     private fun collectFiles(dir: File, files: MutableList<File>) {
