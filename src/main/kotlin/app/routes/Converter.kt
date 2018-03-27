@@ -68,6 +68,7 @@ class Converter {
             Format.ECOSPOLD_1 -> ImportEcoSpold1()
             Format.ECOSPOLD_2 -> ImportEcoSpold2()
             Format.JSON_LD -> ImportJSON()
+            Format.SIMAPRO_CSV -> ImportSimaProCsv()
             else -> null
         }
     }

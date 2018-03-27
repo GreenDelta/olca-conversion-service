@@ -68,8 +68,11 @@ export class SetupPanel extends React.Component<Prop, {}> {
         if (url.indexOf("/PROCESS/") >= 0) {
             return model.Format.JSON_LD;
         }
-        if (url.indexOf(".spold")) {
+        if (url.indexOf(".spold") >= 0) {
             return model.Format.ECOSPOLD_2;
+        }
+        if (url.indexOf(".CSV") >= 0 || url.indexOf(".csv") >= 0) {
+            return model.Format.SIMAPRO_CSV;
         }
         return model.Format.ECOSPOLD_1;
     }

@@ -27,9 +27,17 @@ export class FormatCombo extends React.Component<Props, {}> {
     }
 
     private getFormats(): JSX.Element[] {
-        const isSource = this.props.isSource;
+        let formats = model.FORMATS;
+        if (!this.props.isSource) {
+            formats = [
+                model.Format.ECOSPOLD_1,
+                model.Format.ECOSPOLD_2,
+                model.Format.ILCD,
+                model.Format.JSON_LD,
+            ];
+        }
         const options = [];
-        for (const f of model.FORMATS) {
+        for (const f of formats) {
             options.push(<option value={f}>{f}</option>);
         }
         return options;

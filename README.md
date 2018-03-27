@@ -9,7 +9,7 @@ the conversion between the following data formats are supported:
 * [x] [EcoSpold 2](https://www.ecoinvent.org/data-provider/data-provider-toolkit/ecospold2/ecospold2.html)
 * [x] [ILCD](http://eplca.jrc.ec.europa.eu/LCDN/developer.xhtml)
 * [x] [JSON LD](https://github.com/GreenDelta/olca-schema)
-
+* [x] SimaPro CSV (*currently only as source format of a data conversion)
 
 ## Installation
 In order to install the application a Java Runtime Environment >= 8 needs to be
