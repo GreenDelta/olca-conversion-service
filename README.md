@@ -95,14 +95,17 @@ delete the `dump` folder and restart the server.
 
 #### Mapping files
 In the `mappings` folder of a reference system, mapping files can be specified.
-The conversion service currently supports mapping files for the EcoSpold 1
-(`ecospold_flow_map.csv`) and ILCD (`ilcd_flow_map.csv`) import. You can
-prepare a database with reference flows in [openLCA](http://www.openlca.org/)
-which you can export as JSON-LD package and put as `data.zip` into the
-respective folder of the reference system. In a conversion, a data set in a
-specific format is first imported into an in-memory database and then exported
-into the target format. In the import, the flow mappings are then applied. The
-mapping files are simple CSV files with the following columns:
+The mappings in these files are applied to the flows in the source format of
+a conversion and are format specific:
+
+* EcoSpold 1: `ecospold_flow_map.csv`
+* EcoSpold 2: `ecospold_2_flow_map.csv`
+* ILCD: `ilcd_flow_map.csv`
+* SimaPro CSV: `sp_flow_import_map.csv`
+
+The mappings in these files should map to the data in the `data.zip` that you
+provide with the reference system (see above). For the EcoSpold 1+2 and ILCD
+format, the mapping files are simple CSV files with the following columns:
 
 ```
 0: UUID of the flow in the source format
@@ -110,8 +113,14 @@ mapping files are simple CSV files with the following columns:
 2: a conversion factor f: <amount reference> = f * <amount source>
 ``` 
 
-As EcoSpold 1 has no UUIDs, an MD5 based UUID calculated from flow attributes is
-used in this case.
+As flows in the EcoSpold 1 format have no UUIDs, MD5 based UUIDs are calculated
+from flow attributes in this case. The format of the SimaPro CSV mapping file
+is specified [in the olca-modules](https://github.com/GreenDelta/olca-modules/blob/master/olca-io/REF_DATA.md#simapro-csv-flow-import-mapping)
+repository. The folder [default_mappings](./default_mappings) contains the
+mapping files that the conversion service uses by default.
+
+Additionally, these mappings can be overwritten in each conversion request by
+providing a list of flow mappings directly in the conversion request: ...
 
 ## How the conversion works
 A client sends a conversion request to the conversion server which includes an
