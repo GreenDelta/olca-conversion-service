@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { FormatCombo } from "./FormatCombo";
 import * as model from "../model/model";
+import { RefSystemCombo } from "./RefSystemCombo";
 
 interface Prop {
     setup: model.Setup;
@@ -25,6 +26,8 @@ export class SetupPanel extends React.Component<Prop, {}> {
                     selected={setup.targetFormat}
                     other={setup.sourceFormat}
                     onSelet={(f) => this.onTargetFormatChange(f)} />
+                <RefSystemCombo
+                    onChange={(refSystem) => this.onRefSystemChange(refSystem)} />
                 <div className="text-center">
                     <input className="app-button btn btn-outline-secondary"
                         value="Convert it!" type="button"
@@ -39,6 +42,7 @@ export class SetupPanel extends React.Component<Prop, {}> {
         const targetFormat = this.getOtherFormat(sourceFormat);
         this.props.onChange({
             url, sourceFormat, targetFormat,
+            refSystem: this.props.setup.refSystem,
         });
     }
 
@@ -47,6 +51,7 @@ export class SetupPanel extends React.Component<Prop, {}> {
         this.props.onChange({
             url: this.props.setup.url,
             sourceFormat, targetFormat,
+            refSystem: this.props.setup.refSystem,
         });
     }
 
@@ -55,7 +60,14 @@ export class SetupPanel extends React.Component<Prop, {}> {
             url: this.props.setup.url,
             sourceFormat: this.props.setup.sourceFormat,
             targetFormat,
+            refSystem: this.props.setup.refSystem,
         });
+    }
+
+    private onRefSystemChange(refSystem: string) {
+        const setup = { ... this.props.setup };
+        setup.refSystem = refSystem;
+        this.props.onChange(setup);
     }
 
     private predictSourceFormat(url: string): model.Format {

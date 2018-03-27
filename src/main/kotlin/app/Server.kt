@@ -15,8 +15,8 @@ object Server {
 
     private val log = LoggerFactory.getLogger(Server::class.java)
 
-    private var refSystems = mutableListOf<RefSystem>()
-    private var defaultRefSystem: RefSystem? = null
+    var refSystems = mutableListOf<RefSystem>()
+    var defaultRefSystem: RefSystem? = null
     var cache: Cache? = null
 
     @JvmStatic

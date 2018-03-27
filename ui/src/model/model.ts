@@ -18,6 +18,7 @@ export interface Setup {
     url: string;
     sourceFormat: Format;
     targetFormat: Format;
+    refSystem: string;
 }
 
 export interface Result {

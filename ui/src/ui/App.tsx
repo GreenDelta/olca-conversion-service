@@ -25,6 +25,7 @@ export class App extends React.Component<{}, State> {
                 url: "http://eplca.jrc.ec.europa.eu/ELCD3/resource/processes/1a7da06d-e8b7-4ff1-920c-209e9009dbe0",
                 sourceFormat: model.Format.ILCD,
                 targetFormat: model.Format.JSON_LD,
+                refSystem: "default",
             },
             running: false,
         };

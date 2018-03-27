@@ -42,7 +42,8 @@ def main():
     setup = {
         "url": "${setup.url}",
         "sourceFormat": "${setup.sourceFormat}",
-        "targetFormat": "${setup.targetFormat}"
+        "targetFormat": "${setup.targetFormat}",
+        "refSystem": "${setup.refSystem}",
     }
     r = requests.post(API_ENDPOINT + "convert", json=setup)
     if r.status_code != 200:
