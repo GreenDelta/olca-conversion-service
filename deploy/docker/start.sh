@@ -18,7 +18,7 @@ then
 fi
 if [[ -z $UI_DIR ]]
 then
-    export UI_DIR=/app/ui
+    export UI_DIR=/app/ui/build
 fi
 if [[ -z $MAPPINGS_DIR ]]
 then
