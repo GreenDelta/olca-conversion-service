@@ -3,7 +3,8 @@ config.ini
 
 ui/build/
 ui/node_modules/
-target/
+target/*
+!target/server.jar
 
 .settings/
 .project

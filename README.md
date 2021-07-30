@@ -171,6 +171,13 @@ gulp
 The build script will package the UI in the distribution package if it can find
 it.
 
+## Docker Image
+
+After the project is built, a docker image can be created:
+
+```bash
+docker build . -t olca-conversion-service
+```
 
 ## API
 

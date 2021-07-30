@@ -6,6 +6,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
     "font-awesome": "^4.7.0",
+    "fs": "0.0.1-security",
     "jquery": "^3.2.1",
     "popper.js": "^1.12.5",
     "prismjs": "^1.9.0",

@@ -1,0 +1,10 @@
+{
+  "host": "${HOST}",
+  "port": ${PORT},
+  "workspace": "${WORKSPACE_DIR}",
+  "ui": "${UI_DIR}",
+  "derbyDB": {
+    "folder": "${DERBY_DIR}"
+  },
+  "mappings": "${MAPPINGS_DIR}"
+}
