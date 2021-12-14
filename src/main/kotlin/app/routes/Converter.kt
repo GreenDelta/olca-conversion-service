@@ -17,12 +17,12 @@ import app.model.ImportJSON
 import app.model.ImportSimaProCsv
 import com.google.gson.Gson
 import org.openlca.core.database.IDatabase
-import javax.ws.rs.Consumes
-import javax.ws.rs.POST
-import javax.ws.rs.Path
-import javax.ws.rs.core.MediaType
-import javax.ws.rs.core.Response
-import javax.ws.rs.core.Response.Status
+import jakarta.ws.rs.Consumes
+import jakarta.ws.rs.POST
+import jakarta.ws.rs.Path
+import jakarta.ws.rs.core.MediaType
+import jakarta.ws.rs.core.Response
+import jakarta.ws.rs.core.Response.Status
 
 @Path("convert")
 class Converter {
@@ -75,8 +75,7 @@ class Converter {
     }
 
     private fun getImport(setup: ConversionSetup): Import? {
-        val format = Format.get(setup.sourceFormat)
-        return when(format) {
+        return when(Format.get(setup.sourceFormat)) {
             Format.ILCD -> ImportILCD()
             Format.ECOSPOLD_1 -> ImportEcoSpold1()
             Format.ECOSPOLD_2 -> ImportEcoSpold2()
@@ -87,8 +86,7 @@ class Converter {
     }
 
     private fun getExport(setup: ConversionSetup): Export? {
-        val format = Format.get(setup.targetFormat)
-        return when(format) {
+        return when(Format.get(setup.targetFormat)) {
             Format.JSON_LD -> ExportJSON()
             Format.ILCD -> ExportILCD()
             Format.ECOSPOLD_1 -> ExportEcoSpold1()

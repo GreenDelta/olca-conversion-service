@@ -19,7 +19,7 @@ class ImportSimaProCsv: Import {
                 input.copyTo(output)
             }
         }
-        val imp = SimaProCsvImport(db, tempFile)
+        val imp = SimaProCsvImport(db, arrayOf(tempFile))
         imp.run()
         log.debug("data imported; delete file {}", tempFile)
         tempFile.delete()

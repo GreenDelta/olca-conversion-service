@@ -18,6 +18,9 @@ class LcaRepo(private val url: String) : EntityStore {
     override fun close() {
     }
 
+    override fun putMetaInfo(obj: JsonObject?) {
+    }
+
     override fun contains(type: ModelType, id: String): Boolean {
         // TODO: very inefficient
         val data = get(type, id)

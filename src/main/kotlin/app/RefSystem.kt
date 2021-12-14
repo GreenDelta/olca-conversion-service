@@ -63,7 +63,7 @@ class RefSystem private constructor(
 
         private fun importMappings(mappingDir: File, db: IDatabase) {
             log.info("Import mapping files from {}", mappingDir)
-            mappingDir.listFiles().forEach { f ->
+            mappingDir.listFiles()?.forEach { f ->
                 if (!f.isFile)
                     return@forEach
                 val name = f.name

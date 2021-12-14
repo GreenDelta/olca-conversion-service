@@ -13,6 +13,8 @@ class ConversionSetup {
     fun flowMap(): FlowMap? {
         if (flowMapping == null)
             return null
-        return FlowMap(flowMapping)
+        val flowMap = FlowMap()
+        flowMap.entries.addAll(flowMapping!!)
+        return flowMap
     }
 }

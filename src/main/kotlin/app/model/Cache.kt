@@ -116,7 +116,7 @@ class Cache(private val dir: File) {
     }
 
     private fun collectFiles(dir: File, files: MutableList<File>) {
-        dir.listFiles().forEach { f ->
+        dir.listFiles()?.forEach { f ->
             if (f.isDirectory) {
                 collectFiles(f, files)
             } else {

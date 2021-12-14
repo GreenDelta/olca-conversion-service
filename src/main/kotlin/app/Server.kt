@@ -16,8 +16,8 @@ object Server {
     private val log = LoggerFactory.getLogger(Server::class.java)
 
     var refSystems = mutableListOf<RefSystem>()
-    var defaultRefSystem: RefSystem? = null
     var cache: Cache? = null
+    private var defaultRefSystem: RefSystem? = null
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -62,7 +62,7 @@ object Server {
         if (!refDir.exists()) {
             refDir.mkdirs()
         }
-        refDir.listFiles().forEach { f ->
+        refDir.listFiles()?.forEach { f ->
             val rs =RefSystem.initialize(f)
             refSystems.add(rs)
             if (Strings.nullOrEqual(rs.name, "default")) {

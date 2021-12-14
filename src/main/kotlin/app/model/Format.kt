@@ -9,7 +9,7 @@ enum class Format(val label: String) {
 
     companion object {
         fun get(label: String): Format? {
-            Format.values().forEach { f ->
+            values().forEach { f ->
                 if (f.label == label)
                     return f
             }

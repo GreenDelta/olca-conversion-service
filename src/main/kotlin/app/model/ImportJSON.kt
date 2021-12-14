@@ -2,7 +2,6 @@ package app.model
 
 import org.openlca.core.database.IDatabase
 import org.openlca.core.model.ModelType
-import org.openlca.core.model.Process
 import org.openlca.jsonld.input.JsonImport
 
 class ImportJSON : Import {
